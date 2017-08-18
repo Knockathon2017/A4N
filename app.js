@@ -30,7 +30,7 @@ var logger = new(winston.Logger)({
 //required static files called
 app.use('/assets/js', express.static(path.join(__dirname, 'src', 'assets', 'js')));
 app.use('/assets/css', express.static(path.join(__dirname, 'src', 'assets', 'css')));
-app.use('/assets/img', express.static(path.join(__dirname, 'src', 'assets', 'img')));
+app.use('/assets/images', express.static(path.join(__dirname, 'src', 'assets', 'images')));
 app.use('/assets/fonts', express.static(path.join(__dirname, 'src', 'assets', 'fonts')));
 app.use('/assets/font', express.static(path.join(__dirname, 'src', 'assets', 'font')));
 app.use('/assets/app', express.static(path.join(__dirname, '..', 'Client')));

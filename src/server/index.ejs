@@ -38,36 +38,22 @@
           </div>
           <div class="col-sm-8 col-xs-12">
             <div class="row">
-              <div class="col-sm-3 col-xs-12">
+              <div class="col-sm-5 col-xs-12">
                 <div class="searchTour">
-                  <select class="select-drop form-control">
-                    <option value="0">Country</option>
-                    <option value="1">India</option>                    
-                  </select>
+                  <input type="text" placeholder="Exzeo Software, Sector 62, Noida" class="form-control textbox">
+                  <span>From</span>
                 </div>
               </div>
-              <div class="col-sm-3 col-xs-12">
+              <div class="col-sm-5 col-xs-12">
                 <div class="searchTour">
-                  <select class="select-drop form-control">
-                    <option value="0">State</option>
-                    <option value="1">Delhi</option>                    
-                  </select>
+                  <input type="text" placeholder="New Delhi" class="form-control textbox">
+                  <span>To</span>
                 </div>
               </div>
-              <div class="col-sm-3 col-xs-12">
+              <div class="col-sm-2 col-xs-12">
                 <div class="searchTour">
-                  <select class="select-drop form-control">
-                    <option value="0">City</option>
-                    <option value="1">India</option>                    
-                  </select>
-                </div>
-              </div>
-              <div class="col-sm-3 col-xs-12">
-                <div class="searchTour">
-                  <select class="select-drop form-control">
-                    <option value="0">City</option>
-                    <option value="1">India</option>                    
-                  </select>
+                  <input type="text" placeholder="2 - 4 Hr." class="form-control textbox">
+                  <span>Time</span>
                 </div>
               </div>
             </div>
@@ -78,10 +64,49 @@
         </div>
       </div>
     </section>
+    
+    
+    
+    <section class="front hide" id="introslide">
+        
+    </section>
+    
+    <section class="result">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-10">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3502.5700176351966!2d77.27507321505588!3d28.612673482425606!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce35b9975b1fb%3A0x69a09f265ef3b22a!2sAkshardham!5e0!3m2!1sen!2sin!4v1503081887696" width="100%" height="100%" frameborder="0" style="border:0" allowfullscreen></iframe>
+                </div>
+                <div class="col-sm-2">
+                    place listing
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
+    <script>
+        $('#introslide').css({
+            'height': (($(window).height()) - 170) + 'px'
+        });
+        $(window).resize(function () {
+            $('#introslide').css({
+                'height': (($(window).height()) - 170) + 'px'
+            });
+        }); 
+        
+        
+        $('.result').css({
+            'height': (($(window).height()) - 40) + 'px'
+        });
+        $(window).resize(function () {
+            $('.result').css({
+                'height': (($(window).height()) - 40) + 'px'
+            });
+        });
+    </script>
   </body>
 </html>
