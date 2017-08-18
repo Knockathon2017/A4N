@@ -38,36 +38,22 @@
           </div>
           <div class="col-sm-8 col-xs-12">
             <div class="row">
-              <div class="col-sm-3 col-xs-12">
+              <div class="col-sm-5 col-xs-12">
                 <div class="searchTour">
-                  <select class="select-drop form-control">
-                    <option value="0">Country</option>
-                    <option value="1">India</option>                    
-                  </select>
+                  <input type="text" placeholder="Exzeo Software, Sector 62, Noida" class="form-control textbox">
+                  <span>From</span>
                 </div>
               </div>
-              <div class="col-sm-3 col-xs-12">
+              <div class="col-sm-5 col-xs-12">
                 <div class="searchTour">
-                  <select class="select-drop form-control">
-                    <option value="0">State</option>
-                    <option value="1">Delhi</option>                    
-                  </select>
+                  <input type="text" placeholder="New Delhi" class="form-control textbox">
+                  <span>To</span>
                 </div>
               </div>
-              <div class="col-sm-3 col-xs-12">
+              <div class="col-sm-2 col-xs-12">
                 <div class="searchTour">
-                  <select class="select-drop form-control">
-                    <option value="0">City</option>
-                    <option value="1">India</option>                    
-                  </select>
-                </div>
-              </div>
-              <div class="col-sm-3 col-xs-12">
-                <div class="searchTour">
-                  <select class="select-drop form-control">
-                    <option value="0">City</option>
-                    <option value="1">India</option>                    
-                  </select>
+                  <input type="text" placeholder="2 - 4 Hr." class="form-control textbox">
+                  <span>Time</span>
                 </div>
               </div>
             </div>
@@ -78,10 +64,24 @@
         </div>
       </div>
     </section>
+    
+    <section class="front" id="introslide">
+        
+    </section>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
+    <script>
+        $('#introslide').css({
+            'height': (($(window).height()) - 170) + 'px'
+        });
+        $(window).resize(function () {
+            $('#introslide').css({
+                'height': (($(window).height()) - 170) + 'px'
+            });
+        });  
+    </script>
   </body>
 </html>
