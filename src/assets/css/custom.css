@@ -1,0 +1,108 @@
+.darkSection {
+    width: 100%;
+    padding: 42px 0;
+    background-color: #262a2e;
+    display: block;
+}
+.sectionTitleDouble p, .sectionTitleDouble h2 {
+    color: #ffffff;
+    text-transform: uppercase;
+    line-height: 26px;
+    margin-bottom: 0;
+    font-weight: 400;
+    margin: 0;
+}
+.sectionTitleDouble p, .sectionTitleDouble h2 {
+    font-size: 20px;
+}
+.sectionTitleDouble {
+    background-image: url(../images/devider.png);
+    background-position: right center;
+    background-repeat: no-repeat;
+    background-size: 8px 45px;
+}
+.searchTour .sbHolder {
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(222,222,222,.3);
+    margin: 4px 0 0 0;
+}
+
+.searchTour .sbToggle {
+    background: rgba(0,0,0,0) url(../images/arrow-down-1.png) no-repeat scroll 0 0;
+    height: 5px;
+    right: 4px;
+    top: 22px;
+    width: 9px;
+}
+.searchTour .sbSelector:link, .searchTour .sbSelector:visited, .searchTour .sbSelector:hover {
+    color: rgba(255,255,255,.3)!important;
+    text-transform: uppercase;
+}
+select_option1.css:1
+.searchTour .sbSelector {
+    font-family: "Montserrat",sans-serif;
+    font-size: 12px;
+    line-height: 42px;
+    text-indent: 0px;
+}
+select_option1.css:1
+.searchTour .sbHolder, .searchTour .sbSelector {
+    width: 100%!important;
+    height: 45px!important;
+}
+a, .sectionTitleDouble h2 span, .paginationCenter .pagination li a:hover, .paginationCenter .pagination li.active a, .paginationCenter .pagination li.active a:hover, .paginationCenter .pagination li.active a:focus, .accordionsTransparent .panel-heading.active, .thumbnail.deals .caption .captionTitle:hover, .thumbnail.deals .caption .detailsInfo h5, .thumbnail.blogPostItem .caption .detailsInfo h4, .thumbnail.citiesContent .caption .media .media-body a:hover, .thumbnail.citiesContent .caption .media .media-body h4, .blogTitle:hover, .blogInfo li a:hover, .footerContent .list-unstyled li a:hover, .copyRight .list-inline li a:hover, .copyRightText p a:hover, .destinations .media-body .list-unstyled li i, .destinations .media-body .list-unstyled li a:hover, .destinations .media-body .list-unstyled li a:hover i, .isotopeSelector .overlay .fancybox-pop .overlayInfo h5 span, .isotopeSelector:hover h4, .navbar-nav>li.open a, .navbar-nav>li.open a:hover, .navbar-nav>li.open a:focus, .navbar-nav>li>a:hover, .navbar-nav>li.active a, .navbar-nav>li.active a:hover, .navbar-nav>li.dropdown.megaDropMenu .dropdown-menu .list-unstyled li a:hover, .navbar-nav>li.dropdown.singleDrop .dropdown-menu li a:hover, .lightHeader .navbar-nav>li>a:hover, .darkHeader .navbar-nav>li>a:hover, .footerContent .list-unstyled li a:hover, .copyRight .list-inline li a:hover, .copyRightText p a:hover, .promotionWrapper .promotionTable .promotionTableInner .promotionInfo .rating li, .media-heading a:hover, .bookingDetails, .bookingDetails .buttonTransparent:hover, .bookingDetails .paginationCenter .pagination li:first-child a:hover, .paginationCenter .pagination li:first-child .bookingDetails a:hover, .bookingDetails .paginationCenter .pagination li:last-child a:hover, .paginationCenter .pagination li:last-child .bookingDetails a:hover, .bookingDetails .isotopeFilters ul.filter>li a:hover, .isotopeFilters ul.filter>li .bookingDetails a:hover, .singlePackage .packageInfo .dl-horizontal dt, .singlePackage .packageInfo .dl-horizontal dd span, .singlePackage .packageInfo p span, .blogSidebar .panel .panel-body .list-group .list-group-item:hover, .blogSidebar .panel .panel-body .list-group .list-group-item:hover .badge, .tabArea .tab-content .media .media-body .media-heading:hover, .blogSinglePost .well .list-inline li a:hover, .commentsArea .media .media-body .btn-link, .commentsArea .media .media-body .btn-link:hover, .aboutComments .commentsTable .commentsTableInner .commentsInfo h5, .bookingForm .form .checkbox label a, .bookingForm .commentsForm .checkbox label a, .bookingForm .modal.bookingModal .modal-dialog .modal-content .modal-body .checkbox label a, .modal.bookingModal .modal-dialog .modal-content .bookingForm .modal-body .checkbox label a, .infoArea h2 span, .priceTotal h2 span, .priceTable .panel .priceCircle h3, .priceTable .panel:hover .bodyImageBg .priceCircle h3, .countryTabs .nav-tabs>li.pull-right .list-inline li a:hover {
+    color: #ff891e;
+}
+
+.buttonCustomPrimary {
+    height: 45px;
+    line-height: 45px;
+    border-radius: 4px;
+    background-color: #ff891e;
+    text-transform: uppercase;
+    color: #ffffff!important;
+    font-weight: 400;
+    font-size: 15px;
+    padding: 0;
+}
+
+.select-drop{
+    height: 45px;
+    line-height: 45px;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    border-bottom: 1px solid #4e5153;
+    padding: 6px 0;
+}
+.select-drop:focus {
+    border-color: #999;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgb(38, 42, 46);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgb(38, 42, 46);
+}
+
+.header{        background: #00BCD4;
+    
+}
+.header h1{
+    margin: 0;
+    padding: 0;
+    font-size: 24px;
+    line-height: 36px;
+    color: #fff;
+    font-weight: 100;
+}
+.header h1 span{
+    font-size: 24px;
+    line-height: 36px;
+    color: rgba(255, 255, 255, 0.61);
+    font-weight: 700;
+}
+.header h1 span.punch{
+    font-size: 14px;
+    line-height: 36px;
+    color: #222;
+    font-weight: 100;
+}
