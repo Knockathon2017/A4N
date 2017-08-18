@@ -1,0 +1,19 @@
+{
+  "name": "a4n",
+  "version": "1.0.0",
+  "description": "A4N",
+  "author": "amit mishra",
+  "license": "ISC",
+  "main": "src/app.js",
+  "dependencies": {
+    "async": "~0.8.0",
+    "body-parser": "^1.16.1",
+    "ejs": "^2.5.5",
+    "express": "^4.14.1",
+    "nodemon": "^1.11.0",
+    "request": "^2.79.0",
+    "winston": "^2.3.1"
+  },
+  "preferGlobal": true,
+  "private": true
+}
