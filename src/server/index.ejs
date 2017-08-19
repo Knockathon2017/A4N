@@ -43,7 +43,7 @@
                     <div class="row">
                         <div class="col-sm-4 col-xs-12">
                             <div class="searchTour">
-                                <input type="text" id="result" placeholder="Exzeo Software, Sector 62, Noida" class="form-control textbox" style="padding-left:15px;">
+                                <input type="text" id="result" placeholder="Select Current location/City" class="form-control textbox" style="padding-left:15px;">
                                 <span>From</span>
                                 <a href="javascript:void(0)" class="clocation" onclick="detectmylocation()" title="Click for current location"><i class="glyphicon glyphicon-map-marker" aria-hidden="true"></i></a>
                             </div>
@@ -157,11 +157,11 @@
         function initialize(origin) {
             debugger;
             directionsDisplay = new google.maps.DirectionsRenderer();
-            var chicago = new google.maps.LatLng(28.626663, 77.209015);
+            var india = new google.maps.LatLng(28.626663, 77.209015);
             var myOptions = {
                 zoom: 6,
                 mapTypeId: google.maps.MapTypeId.ROADMAP,
-                center: chicago
+                center: india
             };
             map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
             directionsDisplay.setMap(map);
@@ -205,31 +205,36 @@
                         // myfunc(data);
                         createDiv(data);
                     }
-                    debugger;
-                    if ($("#destinationinput").val() !== undefined && $("#destinationinput").val().length >
-                        0) {
-                        var dest = "";
-                        for (i = 0; i < addwithName.length; i++) {
-                            debugger;
-                            if (addwithName[i].name.toLowerCase() == $("#destinationinput").val().toLowerCase()) {
-                                var dest = addwithName[i].address;
-                                DestinationSourceAndTimerRoute(directionsService, directionsDisplay,
-                                    addressArray,
-                                    dest, $("#result").val(), parseInt($(
-                                        "#timeinput").val()));
-                                        break;                            }
+                    // if (("#result").val(). === undefined || $("#result").val().length <= 0) {
+                    //     window.alert("please select Currentlocation/City is mandatory!");
+                    // } else {
+                        if ($("#destinationinput").val() !== undefined && $("#destinationinput").val().length >
+                            0) {
+                            var dest = "";
+                            for (i = 0; i < addwithName.length; i++) {
+                                debugger;
+                                if (addwithName[i].name.toLowerCase() == $("#destinationinput").val().toLowerCase()) {
+                                    var dest = addwithName[i].address;
+                                    DestinationSourceAndTimerRoute(directionsService, directionsDisplay,
+                                        addressArray,
+                                        dest, sourtour, parseInt($(
+                                            "#timeinput").val()));
+                                    break;
+                                }
+                            }
+                            if (dest == "") {
+                               window.alert("Please select a correct destination!");
+                            }
+                        } else if (parseInt($("#timeinput").val()) !== undefined && parseInt($("#timeinput")
+                                .val()) !==
+                            0) {
+                            SourceAndTimerRoute(directionsService, directionsDisplay, addressArray,
+                                sourtour, parseInt($("#timeinput").val()));
+                        } else {
+                            calculateAndDisplayRoute(directionsService, directionsDisplay, addressArray,
+                                origin);
                         }
-                        if (dest == "") {
-                            window.alert('Please correct your destination. ' + $("#destinationinput").val());
-                        }
-                    } else if (parseInt($("#timeinput").val()) !== undefined && parseInt($("#timeinput").val()) !==
-                        0) {
-                        debugger;
-                        SourceAndTimerRoute(directionsService, directionsDisplay, addressArray, $("#result")
-                            .val(), parseInt($("#timeinput").val()));
-                    } else {
-                        calculateAndDisplayRoute(directionsService, directionsDisplay, addressArray, origin);
-                    }
+                   // }
                 }
             });
         }
@@ -318,8 +323,6 @@
                     //     summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
                     //     summaryPanel.innerHTML += route.legs[i].duration.text + '<br><br>';
                     // }
-                } else {
-                    window.alert('Directions request failed due to ' + status);
                 }
             });
         }
@@ -384,9 +387,14 @@
         }
 
         function changelocation() {
-            $("#dataslide").removeClass("hide");
-            $("#introslide").addClass("hide");
-            initialize($("#result").val());
+            debugger;
+            if ($("#result").val() !== undefined && $("#result").val().length > 0) {
+                $("#dataslide").removeClass("hide");
+                $("#introslide").addClass("hide");
+                initialize($("#result").val());
+            } else {
+               window.alert("Please select Current Location/ City is mandatory!");
+            }
         }
 
         //TimerCalculator
@@ -410,7 +418,6 @@
             res.request.destination.query = res.routes[0].legs[i - 1].end_address;
             return res;
         }
-
         //Timerwith source and destinationCalculator
         function TimerSDCalc(res, timermin, source, dest) {
             var newlocat = [];
@@ -501,19 +508,24 @@
         function createDiv(data) {
             var $mainContainer = $(".placelisting");
             var arr = [];
-            
+
             for (i = 0; i < data.length; i++) {
                 var randomInteger = Math.floor(Math.random() * 5) + 1;
                 var starelement = "";
                 for (var index = 1; index <= randomInteger; index++) {
-                    arr.push('<span class="icon-ic item__star"><svg xmlns="http://www.w3.org/2000/svg" focusable="false" tabindex="-1" width="12" height="12" viewBox="0 0 12 12"><path class="svg-color--primary" fill="#F6AB3F" d="M11.988 5.21c-.052-.275-.27-.488-.545-.534l-3.604-.6L6.63.455C6.542.184 6.287 0 6 0s-.542.184-.632.456L4.16 4.076l-3.603.6c-.275.046-.493.26-.545.533-.052.273.072.55.312.695L3.2 7.63l-1.165 3.493c-.093.28.01.59.25.758.115.08.25.12.382.12.148 0 .295-.05.416-.146L6 9.52l2.917 2.333c.12.098.27.147.416.147.133 0 .267-.04.38-.12.244-.17.346-.478.252-.758L8.8 7.63l2.876-1.725c.24-.144.364-.422.312-.696z"></path></svg></span>');
+                    arr.push(
+                        '<span class="icon-ic item__star"><svg xmlns="http://www.w3.org/2000/svg" focusable="false" tabindex="-1" width="12" height="12" viewBox="0 0 12 12"><path class="svg-color--primary" fill="#F6AB3F" d="M11.988 5.21c-.052-.275-.27-.488-.545-.534l-3.604-.6L6.63.455C6.542.184 6.287 0 6 0s-.542.184-.632.456L4.16 4.076l-3.603.6c-.275.046-.493.26-.545.533-.052.273.072.55.312.695L3.2 7.63l-1.165 3.493c-.093.28.01.59.25.758.115.08.25.12.382.12.148 0 .295-.05.416-.146L6 9.52l2.917 2.333c.12.098.27.147.416.147.133 0 .267-.04.38-.12.244-.17.346-.478.252-.758L8.8 7.63l2.876-1.725c.24-.144.364-.422.312-.696z"></path></svg></span>'
+                    );
                 }
                 starelement = arr.join("");
                 arr = [];
                 var divaddress = data[i].address;
                 var newDiv = $(
                     '<div class="row _placelisting"> <div class="col-sm-4" style="padding-right:0;"> <img onclick=tickfunc(); src="' +
-                    data[i].icon +'" class="img-responsive" alt=""> <div itemprop="name" class="star"> <div class="item__stars-badges"> <div class="item__stars-wrp">'+starelement+'</div> </div> </div> </div> <div class="col-sm-8"> <div class="itemdetails"> <h3>' +
+                    data[i].icon +
+                    '" class="img-responsive" alt=""> <div itemprop="name" class="star"> <div class="item__stars-badges"> <div class="item__stars-wrp">' +
+                    starelement +
+                    '</div> </div> </div> </div> <div class="col-sm-8"> <div class="itemdetails"> <h3>' +
                     data[i].name + '</h3> <p id=' + data[i].name.split(" ").join("_") + '>' + data[i].address +
                     '</p> <span class="visittime"><i class="glyphicon glyphicon-time" aria-hidden="true"></i> 2Hrs</span> <span class="visittime"><i class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></i> ' +
                     data[i].rating +
