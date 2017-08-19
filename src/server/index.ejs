@@ -66,23 +66,23 @@
                                 <span>Adult</span>
                             </div>
                         </div>
-                         <div class="col-sm-1 col-xs-12">
+                        <div class="col-sm-1 col-xs-12">
                             <div class="searchTour">
                                 <input type="number" placeholder="0" class="form-control textbox">
                                 <span>Child</span>
                             </div>
-                        </div> 
+                        </div>
                         <div class="col-sm-1 col-xs-12">
                             <div class="searchTour">
                                 <input type="number" placeholder="0" class="form-control textbox">
                                 <span>Age<60</span>
                             </div>
-                        </div>                        
-                        
-                        
-                        
-                        
-                        
+                        </div>
+
+
+
+
+
                     </div>
                 </div>
                 <div class="col-sm-1 col-xs-12" style="padding:0;">
@@ -481,10 +481,12 @@
                         console.log("location");
                         console.log(addressArray);
                     }
-                    calculateAndDisplayRoute(directionsService, directionsDisplay, addressArray);
+                    DestinationSourceAndTimerRoute(directionsService, directionsDisplay, addressArray, 6);
+                    // calculateAndDisplayRoute(directionsService, directionsDisplay, addressArray);
                 }
             });
         }
+
         //initail call on load
         function calculateAndDisplayRoute(directionsService, directionsDisplay, addressArray) {
             var waypts = [];
@@ -496,7 +498,6 @@
             //         stopover: true
             //     });
             // }
-            debbugger;
             directionsService.route({
                 origin: "TATA Housing Group, A-13/1, Synergy Tower, 5th Floor, Sector-62, Block B, Industrial Area, Sector 62, Noida, Uttar Pradesh 201301, India",
                 // destination: document.getElementById('end').value,
@@ -574,49 +575,60 @@
         }
 
         // call using timerwith destination
-        function DestinationSourceAndTimerRoute(directionsService, directionsDisplay, addressArray,destination,Timer) {
+        function DestinationSourceAndTimerRoute(directionsService, directionsDisplay, addressArray, timer) {
             var waypts = [];
-            // var checkboxArray = document.getElementById('waypoints');
             var checkboxArray = addressArray;
-            for (var i = 0; i < checkboxArray.length; i++) {
-                waypts.push({
-                    location: checkboxArray[i].address,
-                    stopover: true
-                });
-            }
             directionsService.route({
-                // origin: document.getElementById('start').value,
-                // destination: document.getElementById('end').value,
-                origin: checkboxArray[0].address,
-                destination: checkboxArray[checkboxArray.length - 1].address,
+                origin: "a-42/6, 6th floor, pinnacle tower, exzeo software, noida sector-62, up-201301",
+                destination: "Lotus Temple Rd, Bahapur, Shambhu Dayal Bagh, Kalkaji, New Delhi, Delhi 110019, India",
                 waypoints: waypts,
                 optimizeWaypoints: true,
                 travelMode: 'DRIVING'
             }, function (response, status) {
                 if (status === 'OK') {
-                    var time = 300;
-                    var drawloc = TimerCalcWithDestination(response, time,checkboxArray[checkboxArray.length - 1].address);
-                    //console.log(drawloc);
-                    directionsDisplay.setDirections(drawloc);
-                    var route = response.routes[0];
-                    var summaryPanel = document.getElementById('directions_panel');
-                    summaryPanel.innerHTML = '';
-                    // For each route, display summary information.
-                    for (var i = 0; i < route.legs.length; i++) {
-                        debugger;
-                        var routeSegment = i + 1;
-                        summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment +
-                            '</b><br>';
-                        summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
-                        summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
-                        summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
-                        summaryPanel.innerHTML += route.legs[i].duration.text + '<br><br>';
+                    if (timer == null)
+                        directionsDisplay.setDirections(drawloc);
+                    else {
+                        //  var timeinmin = timer * 60;
+                        var timeinmin = 65;
+                        var route1 = response.routes[0];
+                        if (timeinmin > parseInt(route1.legs[0].duration.text)) {
+                            for (var i = 0; i < checkboxArray.length; i++) {
+                                waypts.push({
+                                    location: checkboxArray[i].address,
+                                    stopover: true
+                                });
+                            }
+                            var destin =
+                                "Mehrauli-Badarpur Road, Village : Said-ul-Ajaib, Near Saket Metro Station, New Delhi, Delhi 110030, India";
+                            directionsService.route({
+                                origin: "a-42/6, 6th floor, pinnacle tower, exzeo software, noida sector-62, up-201301",
+                                destination: "Lotus Temple Rd, Bahapur, Shambhu Dayal Bagh, Kalkaji, New Delhi, Delhi 110019, India",
+                                waypoints: waypts,
+                                optimizeWaypoints: true,
+                                travelMode: 'DRIVING'
+                            }, function (response, status) {
+                                if (status === 'OK') {
+                                    debugger;
+                                    TimerSDCalc(response, timeinmin);
+                                   // directionsDisplay.setDirections(drawloc);
+                                  //  var route = response.routes[0];
+                                }
+                                // } else {
+                                //     window.alert('Directions request failed due to ' + status);
+                                // }
+                            });
+                        } else {
+                            window.alert('timer is wrong estimate...');
+                        }
+                        // var route = response.routes[0];
                     }
                 } else {
                     window.alert('Directions request failed due to ' + status);
                 }
             });
         }
+
 
         function detectmylocation() {
             document.getElementById("result").value =
@@ -641,23 +653,91 @@
             return res;
         }
 
-        //TimerCalculator
-        function TimerCalcWithDestination(res, timerhour, detination) {
-            debugger;
+        //Timerwith source and destinationCalculator
+        function TimerSDCalc(res, timermin) {
+            var newlocat = [];
+            var waypts = [];
             var timercall = res.routes[0].legs;
             var sum = 0;
-            for (i = 0; i < timercall.length; i++) {
-                if (sum >= timerhour) {
+             newlocat.push(timercall[timercall.length - 1].end_address);
+            sum = sum + parseInt(timercall[timercall.length - 1].duration.text)
+            for (i = 0; i <= timercall.length - 1; i++) {
+                if (sum >= timermin) {
                     break;
-                } else
-                    sum = sum + parseInt(timercall[i].duration.text)
+                } else {
+                    //var loc =timercall[i].end_address;
+                   newlocat.push(timercall[i].end_address);
+                    sum = sum + parseInt(timercall[i].duration.text);
+                }
             }
-            res.geocoded_waypoints = res.geocoded_waypoints.slice(0, i);
-            res.routes[0].legs = res.routes[0].legs.slice(0, i);
-            res.routes[0].waypoint_order = res.routes[0].waypoint_order.slice(0, i);
-            debugger;
-            return res;
-        }
+            for (var i = 0; i < newlocat.length; i++) {
+                waypts.push({
+                    location: newlocat[i],
+                    stopover: true
+                });
+                directionsService.route({
+                    origin: "a-42/6, 6th floor, pinnacle tower, exzeo software, noida sector-62, up-201301",
+                    destination: "Lotus Temple Rd, Bahapur, Shambhu Dayal Bagh, Kalkaji, New Delhi, Delhi 110019, India",
+                    waypoints: waypts,
+                    optimizeWaypoints: true,
+                    travelMode: 'DRIVING'
+                }, function (response, status) {
+                    if (status === 'OK') {
+                        // debugger;
+                        // var drawloc = TimerSDCalc(response, timeinmin);
+                        directionsDisplay.setDirections(response);
+                        var route = response.routes[0];
+                    } else {
+                        window.alert('Directions request failed due to ' + status);
+                    }
+                });
+            }}
+
+            //TimerCalculator
+            function TimerCalcWithDestination(res, timerhour, detination) {
+                debugger;
+                var timercall = res.routes[0].legs;
+                var sum = 0;
+                for (i = 0; i < timercall.length; i++) {
+                    if (sum >= timerhour) {
+                        break;
+                    } else
+                        sum = sum + parseInt(timercall[i].duration.text)
+                }
+                res.geocoded_waypoints = res.geocoded_waypoints.slice(0, i);
+                res.routes[0].legs = res.routes[0].legs.slice(0, i);
+                res.routes[0].waypoint_order = res.routes[0].waypoint_order.slice(0, i);
+                debugger;
+                return res;
+            }
+
+         //filter exclude
+        // function excludeFilter(directionsService, directionsDisplay, addressArray,excludearray) {
+        //     var waypts = [];
+        //     // var checkboxArray = document.getElementById('waypoints');
+        //     var checkboxArray = addressArray;
+        //     var index = checkboxArray.indexOf(excludearray);
+        //     checkboxArray.splice(index,1);
+        //     directionsService.route({
+        //         origin: "TATA Housing Group, A-13/1, Synergy Tower, 5th Floor, Sector-62, Block B, Industrial Area, Sector 62, Noida, Uttar Pradesh 201301, India",
+        //         // destination: document.getElementById('end').value,
+        //         //  origin: checkboxArray[0].address,
+        //         destination: checkboxArray[checkboxArray.length - 1].address,
+        //         waypoints: waypts,
+        //         optimizeWaypoints: true,
+        //         travelMode: 'DRIVING'
+        //     }, function (response, status) {
+        //         if (status === 'OK') {
+        //             directionsDisplay.setDirections(response);
+        //             }
+        //         } else {
+        //             window.alert('Directions request failed due to ' + status);
+        //         }
+        //     });
+            
+        //     }
+       // }
+
     </script>
 </body>
 
