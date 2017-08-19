@@ -4,6 +4,9 @@ var path = require('path');
 var fs = require('fs');
 var homeCtrl = require("./homeController");
 var router = express.Router();
+var currentLocation = require('../assets/js/current_location_index.js');
+var where = require('node-where');
+var NodeGeocoder = require('node-geocoder');
 
 
 router.get('/', function (req, res) {
@@ -18,7 +21,7 @@ router.get('/', function (req, res) {
                     var location = element.geometry.location;
                     var address = element.formatted_address;
                     // addressArray.push(address);
-                    var obj = { 
+                    var obj = {
                         address: address
                     };
                     addressArray.push(obj);
@@ -47,7 +50,7 @@ router.get('/callgoogleapi', function (req, res) {
                     var location = element.geometry.location;
                     var address = element.formatted_address;
                     // addressArray.push(address);
-                    var obj = { 
+                    var obj = {
                         address: address
                     };
                     addressArray.push(obj);
@@ -62,6 +65,35 @@ router.get('/callgoogleapi', function (req, res) {
         res.render("error");
     }
 });
+
+// router.get('/myclocation', function (req, res) {
+//     console.log("myclocation");
+//     try {
+//         var lat = 28.625267;
+//         var long = 77.373419;
+//         var options = {
+//             provider: 'google',
+
+//             // Optional depending on the providers 
+//             httpAdapter: 'https', // Default 
+//             apiKey: 'AIzaSyDVDNY_xUq0LKpNswJ_d4U5_r2u2hmd1m4', // for Mapquest, OpenCage, Google Premier 
+//             formatter: null // 'gpx', 'string', ... 
+//         };
+
+//         var geocoder = NodeGeocoder(options);
+//         geocoder.reverse({
+//             lat: 28.625267,
+//             lon: 77.373419
+//         }, function (err, resp) {
+//             console.log("sdsdffsdfsdfsdfsd");
+//             console.log(resp);
+//             var data = JSON.parse(resp)
+//             res.json(data);
+//         });
+//     } catch (error) {
+//         res.render("error");
+//     }
+// });
 
 
 
