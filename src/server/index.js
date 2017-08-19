@@ -37,7 +37,9 @@ router.get('/', function (req, res) {
 router.get('/callgoogleapi', function (req, res) {
     console.log("googleapi");
     try {
-        var url = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=new+delhi+city+point+of+interest&language=en&key=AIzaSyDVDNY_xUq0LKpNswJ_d4U5_r2u2hmd1m4";
+        var query = req.query != undefined && req.query.q !== undefined ? req.query.q : "new+delhi";
+        var url = "https://maps.googleapis.com/maps/api/place/textsearch/json?query="+query+"+city+point+of+interest&language=en&key=AIzaSyDGkl5gwwRYnMqCJF_CUiZmwJhYiTmkqQU";
+        console.log(url);
         homeCtrl.getRequest(req, url, function (resp) {
             var jsonData = JSON.parse(resp);
             if (jsonData.results !== undefined) {
