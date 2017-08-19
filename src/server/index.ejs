@@ -181,6 +181,7 @@
                     // var jsonData = JSON.parse(data);
                     var jsonData = data;
                     var addressArray = [];
+                    var addwithName = [];
                     if (jsonData !== undefined) {
                         for (var index = 0; index < jsonData.length; index++) {
                             var element = jsonData[index];
@@ -190,8 +191,13 @@
                             var obj = {
                                 address: address
                             };
+                            var obj1 = {
+                                address: address,
+                                name: element.name
+                            }
                             addressArray.push(obj);
-                            var place_name = element.name;
+                            addwithName.push(obj1);
+                            //   var place_name = element.name;
                         }
                         debugger;
                         console.log("location");
@@ -200,20 +206,30 @@
                         createDiv(data);
                     }
                     debugger;
-                    //DestinationSourceAndTimerRoute(directionsService, directionsDisplay, addressArray, 6);
-                    // calculateAndDisplayRoute(directionsService, directionsDisplay, addressArray);
-                    if (parseInt($("#timeinput").val()) !== undefined && parseInt($("#timeinput").val()) !==
+                    if ($("#destinationinput").val() !== undefined && $("#destinationinput").val().length >
+                        0) {
+                        var dest = "";
+                        for (i = 0; i < addwithName.length; i++) {
+                            debugger;
+                            if (addwithName[i].name.toLowerCase() == $("#destinationinput").val().toLowerCase()) {
+                                var dest = addwithName[i].address;
+                                DestinationSourceAndTimerRoute(directionsService, directionsDisplay,
+                                    addressArray,
+                                    dest, $("#result").val(), parseInt($(
+                                        "#timeinput").val()));
+                                        break;                            }
+                        }
+                        if (dest == "") {
+                            window.alert('Please correct your destination. ' + $("#destinationinput").val());
+                        }
+                    } else if (parseInt($("#timeinput").val()) !== undefined && parseInt($("#timeinput").val()) !==
                         0) {
                         debugger;
                         SourceAndTimerRoute(directionsService, directionsDisplay, addressArray, $("#result")
                             .val(), parseInt($("#timeinput").val()));
-                    } else if ($("#destinationinput").val() !== undefined && $("#destinationinput").val().length >
-                        0)
-                        DestinationSourceAndTimerRoute(directionsService, directionsDisplay, addressArray,
-                            "Mehrauli, New Delhi, Delhi 110030, India", $("#result").val(), parseInt($(
-                                "#timeinput").val()));
-                    else
+                    } else {
                         calculateAndDisplayRoute(directionsService, directionsDisplay, addressArray, origin);
+                    }
                 }
             });
         }
@@ -308,11 +324,6 @@
             });
         }
 
-        // function tickfunc(){
-        //     debugger;
-        //     initialize("Mehrauli, New Delhi, Delhi 110030, India");
-        //     debugger;
-        //     }
         // call using timerwith destination
         function DestinationSourceAndTimerRoute(directionsService, directionsDisplay, addressArray, dest, source, timer) {
             var waypts = [];
@@ -416,21 +427,6 @@
             res.request.destination.query = res.routes[0].legs[i - 1].end_address;
             return res;
         }
-        // $.ajax({
-        //     type: "GET",
-        //     url: "/callgoogleapi",
-        //     error: function (jqXHR, textStatus, errorThrown) {
-        //         debugger;
-        //         console.log("error");
-        //     },
-        //     success: function (data) {
-        //         debugger;
-        //         createDiv(data);
-        //         // var jsonData = JSON.parse(data);
-
-        //     }
-        // });
-
 
         //Timerwith source and destinationCalculator
         function TimerSDCalc(res, timermin, source, dest) {
