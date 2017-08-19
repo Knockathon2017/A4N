@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -56,7 +55,7 @@
                         </div>
                         <div class="col-sm-1 col-xs-12">
                             <div class="searchTour">
-                                <input type="number" placeholder="4" class="form-control textbox">
+                                <input type="number" id="timeinput" value="2" placeholder="0" class="form-control textbox">
                                 <span>Time(Hrs)</span>
                             </div>
                         </div>
@@ -80,20 +79,16 @@
                         </div>
 
 
-
-
-
                     </div>
                 </div>
                 <div class="col-sm-1 col-xs-12" style="padding:0;">
-                    <a href="#" class="btn btn-block buttonCustomPrimary">Search</a>
+                    <a href="javascript:void(0)" onclick="changelocation()" class="btn btn-block buttonCustomPrimary">Search</a>
                 </div>
             </div>
         </div>
     </section>
 
     <section class="front hide" id="introslide">
-
     </section>
 
     <section class="result">
@@ -106,294 +101,12 @@
                     </div>
                 </div>
                 <div class="col-sm-3 placelisting">
-                    <div class="row">
-                        <div class="col-sm-4" style="padding-right:0;">
-                            <img src="https://media-cdn.tripadvisor.com/media/photo-w/01/13/12/5b/asia.jpg" class="img-responsive" alt="">
-
-                            <div itemprop="name" class="star">
-                                <div class="item__stars-badges">
-                                    <div class="item__stars-wrp"><span class="icon-ic item__star"><svg xmlns="http://www.w3.org/2000/svg" focusable="false" tabindex="-1" width="12" height="12" viewBox="0 0 12 12"><path class="svg-color--primary" fill="#F6AB3F" d="M11.988 5.21c-.052-.275-.27-.488-.545-.534l-3.604-.6L6.63.455C6.542.184 6.287 0 6 0s-.542.184-.632.456L4.16 4.076l-3.603.6c-.275.046-.493.26-.545.533-.052.273.072.55.312.695L3.2 7.63l-1.165 3.493c-.093.28.01.59.25.758.115.08.25.12.382.12.148 0 .295-.05.416-.146L6 9.52l2.917 2.333c.12.098.27.147.416.147.133 0 .267-.04.38-.12.244-.17.346-.478.252-.758L8.8 7.63l2.876-1.725c.24-.144.364-.422.312-.696z"></path></svg></span>
-                                        <span class="icon-ic item__star">
-                                        <svg xmlns="http://www.w3.org/2000/svg" focusable="false" tabindex="-1" width="12" height="12"
-                                            viewBox="0 0 12 12">
-                                            <path class="svg-color--primary" fill="#F6AB3F" d="M11.988 5.21c-.052-.275-.27-.488-.545-.534l-3.604-.6L6.63.455C6.542.184 6.287 0 6 0s-.542.184-.632.456L4.16 4.076l-3.603.6c-.275.046-.493.26-.545.533-.052.273.072.55.312.695L3.2 7.63l-1.165 3.493c-.093.28.01.59.25.758.115.08.25.12.382.12.148 0 .295-.05.416-.146L6 9.52l2.917 2.333c.12.098.27.147.416.147.133 0 .267-.04.38-.12.244-.17.346-.478.252-.758L8.8 7.63l2.876-1.725c.24-.144.364-.422.312-.696z"></path>
-                                        </svg>
-                                        </span><span class="icon-ic item__star"><svg xmlns="http://www.w3.org/2000/svg" focusable="false" tabindex="-1" width="12" height="12" viewBox="0 0 12 12"><path class="svg-color--primary" fill="#F6AB3F" d="M11.988 5.21c-.052-.275-.27-.488-.545-.534l-3.604-.6L6.63.455C6.542.184 6.287 0 6 0s-.542.184-.632.456L4.16 4.076l-3.603.6c-.275.046-.493.26-.545.533-.052.273.072.55.312.695L3.2 7.63l-1.165 3.493c-.093.28.01.59.25.758.115.08.25.12.382.12.148 0 .295-.05.416-.146L6 9.52l2.917 2.333c.12.098.27.147.416.147.133 0 .267-.04.38-.12.244-.17.346-.478.252-.758L8.8 7.63l2.876-1.725c.24-.144.364-.422.312-.696z"></path></svg></span>
-                                        <span class="icon-ic item__star">
-                                            <svg xmlns="http://www.w3.org/2000/svg" focusable="false" tabindex="-1" width="12"
-                                                height="12" viewBox="0 0 12 12">
-                                                <path class="svg-color--primary" fill="#F6AB3F" d="M11.988 5.21c-.052-.275-.27-.488-.545-.534l-3.604-.6L6.63.455C6.542.184 6.287 0 6 0s-.542.184-.632.456L4.16 4.076l-3.603.6c-.275.046-.493.26-.545.533-.052.273.072.55.312.695L3.2 7.63l-1.165 3.493c-.093.28.01.59.25.758.115.08.25.12.382.12.148 0 .295-.05.416-.146L6 9.52l2.917 2.333c.12.098.27.147.416.147.133 0 .267-.04.38-.12.244-.17.346-.478.252-.758L8.8 7.63l2.876-1.725c.24-.144.364-.422.312-.696z"></path>
-                                            </svg>
-                                            </span><span class="icon-ic item__star"><svg xmlns="http://www.w3.org/2000/svg" focusable="false" tabindex="-1" width="12" height="12" viewBox="0 0 12 12"><path class="svg-color--primary" fill="#F6AB3F" d="M11.988 5.21c-.052-.275-.27-.488-.545-.534l-3.604-.6L6.63.455C6.542.184 6.287 0 6 0s-.542.184-.632.456L4.16 4.076l-3.603.6c-.275.046-.493.26-.545.533-.052.273.072.55.312.695L3.2 7.63l-1.165 3.493c-.093.28.01.59.25.758.115.08.25.12.382.12.148 0 .295-.05.416-.146L6 9.52l2.917 2.333c.12.098.27.147.416.147.133 0 .267-.04.38-.12.244-.17.346-.478.252-.758L8.8 7.63l2.876-1.725c.24-.144.364-.422.312-.696z"></path></svg></span></div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="col-sm-8">
-                            <div class="itemdetails">
-
-                                <h3>Ashwem Beach</h3>
-                                <p>North Goa District, Panjim 403509, India</p>
-                                <span class="visittime"><i class="glyphicon glyphicon-time" aria-hidden="true"></i> 2Hrs</span>
-                                <span class="visittime"><i class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></i> 485</span>
-                                <a class="exclude"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span> exclude</a>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="row">
-                        <div class="col-sm-4" style="padding-right:0;">
-                            <img src="https://media-cdn.tripadvisor.com/media/photo-s/03/18/b2/26/ashwem-beach.jpg" class="img-responsive" alt="">
-
-                            <div itemprop="name" class="star">
-                                <div class="item__stars-badges">
-                                    <div class="item__stars-wrp"><span class="icon-ic item__star"><svg xmlns="http://www.w3.org/2000/svg" focusable="false" tabindex="-1" width="12" height="12" viewBox="0 0 12 12"><path class="svg-color--primary" fill="#F6AB3F" d="M11.988 5.21c-.052-.275-.27-.488-.545-.534l-3.604-.6L6.63.455C6.542.184 6.287 0 6 0s-.542.184-.632.456L4.16 4.076l-3.603.6c-.275.046-.493.26-.545.533-.052.273.072.55.312.695L3.2 7.63l-1.165 3.493c-.093.28.01.59.25.758.115.08.25.12.382.12.148 0 .295-.05.416-.146L6 9.52l2.917 2.333c.12.098.27.147.416.147.133 0 .267-.04.38-.12.244-.17.346-.478.252-.758L8.8 7.63l2.876-1.725c.24-.144.364-.422.312-.696z"></path></svg></span>
-                                        <span class="icon-ic item__star">
-                                        <svg xmlns="http://www.w3.org/2000/svg" focusable="false" tabindex="-1" width="12" height="12"
-                                            viewBox="0 0 12 12">
-                                            <path class="svg-color--primary" fill="#F6AB3F" d="M11.988 5.21c-.052-.275-.27-.488-.545-.534l-3.604-.6L6.63.455C6.542.184 6.287 0 6 0s-.542.184-.632.456L4.16 4.076l-3.603.6c-.275.046-.493.26-.545.533-.052.273.072.55.312.695L3.2 7.63l-1.165 3.493c-.093.28.01.59.25.758.115.08.25.12.382.12.148 0 .295-.05.416-.146L6 9.52l2.917 2.333c.12.098.27.147.416.147.133 0 .267-.04.38-.12.244-.17.346-.478.252-.758L8.8 7.63l2.876-1.725c.24-.144.364-.422.312-.696z"></path>
-                                        </svg>
-                                        </span><span class="icon-ic item__star"><svg xmlns="http://www.w3.org/2000/svg" focusable="false" tabindex="-1" width="12" height="12" viewBox="0 0 12 12"><path class="svg-color--primary" fill="#F6AB3F" d="M11.988 5.21c-.052-.275-.27-.488-.545-.534l-3.604-.6L6.63.455C6.542.184 6.287 0 6 0s-.542.184-.632.456L4.16 4.076l-3.603.6c-.275.046-.493.26-.545.533-.052.273.072.55.312.695L3.2 7.63l-1.165 3.493c-.093.28.01.59.25.758.115.08.25.12.382.12.148 0 .295-.05.416-.146L6 9.52l2.917 2.333c.12.098.27.147.416.147.133 0 .267-.04.38-.12.244-.17.346-.478.252-.758L8.8 7.63l2.876-1.725c.24-.144.364-.422.312-.696z"></path></svg></span>
-                                        <span class="icon-ic item__star">
-                                            <svg xmlns="http://www.w3.org/2000/svg" focusable="false" tabindex="-1" width="12"
-                                                height="12" viewBox="0 0 12 12">
-                                                <path class="svg-color--primary" fill="#F6AB3F" d="M11.988 5.21c-.052-.275-.27-.488-.545-.534l-3.604-.6L6.63.455C6.542.184 6.287 0 6 0s-.542.184-.632.456L4.16 4.076l-3.603.6c-.275.046-.493.26-.545.533-.052.273.072.55.312.695L3.2 7.63l-1.165 3.493c-.093.28.01.59.25.758.115.08.25.12.382.12.148 0 .295-.05.416-.146L6 9.52l2.917 2.333c.12.098.27.147.416.147.133 0 .267-.04.38-.12.244-.17.346-.478.252-.758L8.8 7.63l2.876-1.725c.24-.144.364-.422.312-.696z"></path>
-                                            </svg>
-                                            </span><span class="icon-ic item__star"><svg xmlns="http://www.w3.org/2000/svg" focusable="false" tabindex="-1" width="12" height="12" viewBox="0 0 12 12"><path class="svg-color--primary" fill="#F6AB3F" d="M11.988 5.21c-.052-.275-.27-.488-.545-.534l-3.604-.6L6.63.455C6.542.184 6.287 0 6 0s-.542.184-.632.456L4.16 4.076l-3.603.6c-.275.046-.493.26-.545.533-.052.273.072.55.312.695L3.2 7.63l-1.165 3.493c-.093.28.01.59.25.758.115.08.25.12.382.12.148 0 .295-.05.416-.146L6 9.52l2.917 2.333c.12.098.27.147.416.147.133 0 .267-.04.38-.12.244-.17.346-.478.252-.758L8.8 7.63l2.876-1.725c.24-.144.364-.422.312-.696z"></path></svg></span></div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="col-sm-8">
-                            <div class="itemdetails">
-
-                                <h3>Ashwem Beach</h3>
-                                <p>North Goa District, Panjim 403509, India</p>
-                                <span class="visittime"><i class="glyphicon glyphicon-time" aria-hidden="true"></i> 2Hrs</span>
-                                <span class="visittime"><i class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></i> 485</span>
-                                <a class="exclude"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span> exclude</a>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="row">
-                        <div class="col-sm-4" style="padding-right:0;">
-                            <img src="https://media-cdn.tripadvisor.com/media/photo-o/0e/47/b6/a3/caption.jpg" class="img-responsive" alt="">
-
-                            <div itemprop="name" class="star">
-                                <div class="item__stars-badges">
-                                    <div class="item__stars-wrp"><span class="icon-ic item__star"><svg xmlns="http://www.w3.org/2000/svg" focusable="false" tabindex="-1" width="12" height="12" viewBox="0 0 12 12"><path class="svg-color--primary" fill="#F6AB3F" d="M11.988 5.21c-.052-.275-.27-.488-.545-.534l-3.604-.6L6.63.455C6.542.184 6.287 0 6 0s-.542.184-.632.456L4.16 4.076l-3.603.6c-.275.046-.493.26-.545.533-.052.273.072.55.312.695L3.2 7.63l-1.165 3.493c-.093.28.01.59.25.758.115.08.25.12.382.12.148 0 .295-.05.416-.146L6 9.52l2.917 2.333c.12.098.27.147.416.147.133 0 .267-.04.38-.12.244-.17.346-.478.252-.758L8.8 7.63l2.876-1.725c.24-.144.364-.422.312-.696z"></path></svg></span>
-                                        <span class="icon-ic item__star">
-                                        <svg xmlns="http://www.w3.org/2000/svg" focusable="false" tabindex="-1" width="12" height="12"
-                                            viewBox="0 0 12 12">
-                                            <path class="svg-color--primary" fill="#F6AB3F" d="M11.988 5.21c-.052-.275-.27-.488-.545-.534l-3.604-.6L6.63.455C6.542.184 6.287 0 6 0s-.542.184-.632.456L4.16 4.076l-3.603.6c-.275.046-.493.26-.545.533-.052.273.072.55.312.695L3.2 7.63l-1.165 3.493c-.093.28.01.59.25.758.115.08.25.12.382.12.148 0 .295-.05.416-.146L6 9.52l2.917 2.333c.12.098.27.147.416.147.133 0 .267-.04.38-.12.244-.17.346-.478.252-.758L8.8 7.63l2.876-1.725c.24-.144.364-.422.312-.696z"></path>
-                                        </svg>
-                                        </span><span class="icon-ic item__star"><svg xmlns="http://www.w3.org/2000/svg" focusable="false" tabindex="-1" width="12" height="12" viewBox="0 0 12 12"><path class="svg-color--primary" fill="#F6AB3F" d="M11.988 5.21c-.052-.275-.27-.488-.545-.534l-3.604-.6L6.63.455C6.542.184 6.287 0 6 0s-.542.184-.632.456L4.16 4.076l-3.603.6c-.275.046-.493.26-.545.533-.052.273.072.55.312.695L3.2 7.63l-1.165 3.493c-.093.28.01.59.25.758.115.08.25.12.382.12.148 0 .295-.05.416-.146L6 9.52l2.917 2.333c.12.098.27.147.416.147.133 0 .267-.04.38-.12.244-.17.346-.478.252-.758L8.8 7.63l2.876-1.725c.24-.144.364-.422.312-.696z"></path></svg></span>
-                                        <span class="icon-ic item__star">
-                                            <svg xmlns="http://www.w3.org/2000/svg" focusable="false" tabindex="-1" width="12"
-                                                height="12" viewBox="0 0 12 12">
-                                                <path class="svg-color--primary" fill="#F6AB3F" d="M11.988 5.21c-.052-.275-.27-.488-.545-.534l-3.604-.6L6.63.455C6.542.184 6.287 0 6 0s-.542.184-.632.456L4.16 4.076l-3.603.6c-.275.046-.493.26-.545.533-.052.273.072.55.312.695L3.2 7.63l-1.165 3.493c-.093.28.01.59.25.758.115.08.25.12.382.12.148 0 .295-.05.416-.146L6 9.52l2.917 2.333c.12.098.27.147.416.147.133 0 .267-.04.38-.12.244-.17.346-.478.252-.758L8.8 7.63l2.876-1.725c.24-.144.364-.422.312-.696z"></path>
-                                            </svg>
-                                            </span><span class="icon-ic item__star"><svg xmlns="http://www.w3.org/2000/svg" focusable="false" tabindex="-1" width="12" height="12" viewBox="0 0 12 12"><path class="svg-color--primary" fill="#F6AB3F" d="M11.988 5.21c-.052-.275-.27-.488-.545-.534l-3.604-.6L6.63.455C6.542.184 6.287 0 6 0s-.542.184-.632.456L4.16 4.076l-3.603.6c-.275.046-.493.26-.545.533-.052.273.072.55.312.695L3.2 7.63l-1.165 3.493c-.093.28.01.59.25.758.115.08.25.12.382.12.148 0 .295-.05.416-.146L6 9.52l2.917 2.333c.12.098.27.147.416.147.133 0 .267-.04.38-.12.244-.17.346-.478.252-.758L8.8 7.63l2.876-1.725c.24-.144.364-.422.312-.696z"></path></svg></span></div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="col-sm-8">
-                            <div class="itemdetails">
-
-                                <h3>Ashwem Beach</h3>
-                                <p>North Goa District, Panjim 403509, India</p>
-                                <span class="visittime"><i class="glyphicon glyphicon-time" aria-hidden="true"></i> 2Hrs</span>
-                                <span class="visittime"><i class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></i> 485</span>
-                                <a class="exclude"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span> exclude</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-sm-4" style="padding-right:0;">
-                            <img src="https://media-cdn.tripadvisor.com/media/photo-s/03/18/b2/26/ashwem-beach.jpg" class="img-responsive" alt="">
-
-                            <div itemprop="name" class="star">
-                                <div class="item__stars-badges">
-                                    <div class="item__stars-wrp"><span class="icon-ic item__star"><svg xmlns="http://www.w3.org/2000/svg" focusable="false" tabindex="-1" width="12" height="12" viewBox="0 0 12 12"><path class="svg-color--primary" fill="#F6AB3F" d="M11.988 5.21c-.052-.275-.27-.488-.545-.534l-3.604-.6L6.63.455C6.542.184 6.287 0 6 0s-.542.184-.632.456L4.16 4.076l-3.603.6c-.275.046-.493.26-.545.533-.052.273.072.55.312.695L3.2 7.63l-1.165 3.493c-.093.28.01.59.25.758.115.08.25.12.382.12.148 0 .295-.05.416-.146L6 9.52l2.917 2.333c.12.098.27.147.416.147.133 0 .267-.04.38-.12.244-.17.346-.478.252-.758L8.8 7.63l2.876-1.725c.24-.144.364-.422.312-.696z"></path></svg></span>
-                                        <span class="icon-ic item__star">
-                                        <svg xmlns="http://www.w3.org/2000/svg" focusable="false" tabindex="-1" width="12" height="12"
-                                            viewBox="0 0 12 12">
-                                            <path class="svg-color--primary" fill="#F6AB3F" d="M11.988 5.21c-.052-.275-.27-.488-.545-.534l-3.604-.6L6.63.455C6.542.184 6.287 0 6 0s-.542.184-.632.456L4.16 4.076l-3.603.6c-.275.046-.493.26-.545.533-.052.273.072.55.312.695L3.2 7.63l-1.165 3.493c-.093.28.01.59.25.758.115.08.25.12.382.12.148 0 .295-.05.416-.146L6 9.52l2.917 2.333c.12.098.27.147.416.147.133 0 .267-.04.38-.12.244-.17.346-.478.252-.758L8.8 7.63l2.876-1.725c.24-.144.364-.422.312-.696z"></path>
-                                        </svg>
-                                        </span><span class="icon-ic item__star"><svg xmlns="http://www.w3.org/2000/svg" focusable="false" tabindex="-1" width="12" height="12" viewBox="0 0 12 12"><path class="svg-color--primary" fill="#F6AB3F" d="M11.988 5.21c-.052-.275-.27-.488-.545-.534l-3.604-.6L6.63.455C6.542.184 6.287 0 6 0s-.542.184-.632.456L4.16 4.076l-3.603.6c-.275.046-.493.26-.545.533-.052.273.072.55.312.695L3.2 7.63l-1.165 3.493c-.093.28.01.59.25.758.115.08.25.12.382.12.148 0 .295-.05.416-.146L6 9.52l2.917 2.333c.12.098.27.147.416.147.133 0 .267-.04.38-.12.244-.17.346-.478.252-.758L8.8 7.63l2.876-1.725c.24-.144.364-.422.312-.696z"></path></svg></span>
-                                        <span class="icon-ic item__star">
-                                            <svg xmlns="http://www.w3.org/2000/svg" focusable="false" tabindex="-1" width="12"
-                                                height="12" viewBox="0 0 12 12">
-                                                <path class="svg-color--primary" fill="#F6AB3F" d="M11.988 5.21c-.052-.275-.27-.488-.545-.534l-3.604-.6L6.63.455C6.542.184 6.287 0 6 0s-.542.184-.632.456L4.16 4.076l-3.603.6c-.275.046-.493.26-.545.533-.052.273.072.55.312.695L3.2 7.63l-1.165 3.493c-.093.28.01.59.25.758.115.08.25.12.382.12.148 0 .295-.05.416-.146L6 9.52l2.917 2.333c.12.098.27.147.416.147.133 0 .267-.04.38-.12.244-.17.346-.478.252-.758L8.8 7.63l2.876-1.725c.24-.144.364-.422.312-.696z"></path>
-                                            </svg>
-                                            </span><span class="icon-ic item__star"><svg xmlns="http://www.w3.org/2000/svg" focusable="false" tabindex="-1" width="12" height="12" viewBox="0 0 12 12"><path class="svg-color--primary" fill="#F6AB3F" d="M11.988 5.21c-.052-.275-.27-.488-.545-.534l-3.604-.6L6.63.455C6.542.184 6.287 0 6 0s-.542.184-.632.456L4.16 4.076l-3.603.6c-.275.046-.493.26-.545.533-.052.273.072.55.312.695L3.2 7.63l-1.165 3.493c-.093.28.01.59.25.758.115.08.25.12.382.12.148 0 .295-.05.416-.146L6 9.52l2.917 2.333c.12.098.27.147.416.147.133 0 .267-.04.38-.12.244-.17.346-.478.252-.758L8.8 7.63l2.876-1.725c.24-.144.364-.422.312-.696z"></path></svg></span></div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="col-sm-8">
-                            <div class="itemdetails">
-
-                                <h3>Ashwem Beach</h3>
-                                <p>North Goa District, Panjim 403509, India</p>
-                                <span class="visittime"><i class="glyphicon glyphicon-time" aria-hidden="true"></i> 2Hrs</span>
-                                <span class="visittime"><i class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></i> 485</span>
-                                <a class="exclude"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span> exclude</a>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="row">
-                        <div class="col-sm-4" style="padding-right:0;">
-                            <img src="https://media-cdn.tripadvisor.com/media/photo-o/0e/47/b6/a3/caption.jpg" class="img-responsive" alt="">
-
-                            <div itemprop="name" class="star">
-                                <div class="item__stars-badges">
-                                    <div class="item__stars-wrp"><span class="icon-ic item__star"><svg xmlns="http://www.w3.org/2000/svg" focusable="false" tabindex="-1" width="12" height="12" viewBox="0 0 12 12"><path class="svg-color--primary" fill="#F6AB3F" d="M11.988 5.21c-.052-.275-.27-.488-.545-.534l-3.604-.6L6.63.455C6.542.184 6.287 0 6 0s-.542.184-.632.456L4.16 4.076l-3.603.6c-.275.046-.493.26-.545.533-.052.273.072.55.312.695L3.2 7.63l-1.165 3.493c-.093.28.01.59.25.758.115.08.25.12.382.12.148 0 .295-.05.416-.146L6 9.52l2.917 2.333c.12.098.27.147.416.147.133 0 .267-.04.38-.12.244-.17.346-.478.252-.758L8.8 7.63l2.876-1.725c.24-.144.364-.422.312-.696z"></path></svg></span>
-                                        <span class="icon-ic item__star">
-                                        <svg xmlns="http://www.w3.org/2000/svg" focusable="false" tabindex="-1" width="12" height="12"
-                                            viewBox="0 0 12 12">
-                                            <path class="svg-color--primary" fill="#F6AB3F" d="M11.988 5.21c-.052-.275-.27-.488-.545-.534l-3.604-.6L6.63.455C6.542.184 6.287 0 6 0s-.542.184-.632.456L4.16 4.076l-3.603.6c-.275.046-.493.26-.545.533-.052.273.072.55.312.695L3.2 7.63l-1.165 3.493c-.093.28.01.59.25.758.115.08.25.12.382.12.148 0 .295-.05.416-.146L6 9.52l2.917 2.333c.12.098.27.147.416.147.133 0 .267-.04.38-.12.244-.17.346-.478.252-.758L8.8 7.63l2.876-1.725c.24-.144.364-.422.312-.696z"></path>
-                                        </svg>
-                                        </span><span class="icon-ic item__star"><svg xmlns="http://www.w3.org/2000/svg" focusable="false" tabindex="-1" width="12" height="12" viewBox="0 0 12 12"><path class="svg-color--primary" fill="#F6AB3F" d="M11.988 5.21c-.052-.275-.27-.488-.545-.534l-3.604-.6L6.63.455C6.542.184 6.287 0 6 0s-.542.184-.632.456L4.16 4.076l-3.603.6c-.275.046-.493.26-.545.533-.052.273.072.55.312.695L3.2 7.63l-1.165 3.493c-.093.28.01.59.25.758.115.08.25.12.382.12.148 0 .295-.05.416-.146L6 9.52l2.917 2.333c.12.098.27.147.416.147.133 0 .267-.04.38-.12.244-.17.346-.478.252-.758L8.8 7.63l2.876-1.725c.24-.144.364-.422.312-.696z"></path></svg></span>
-                                        <span class="icon-ic item__star">
-                                            <svg xmlns="http://www.w3.org/2000/svg" focusable="false" tabindex="-1" width="12"
-                                                height="12" viewBox="0 0 12 12">
-                                                <path class="svg-color--primary" fill="#F6AB3F" d="M11.988 5.21c-.052-.275-.27-.488-.545-.534l-3.604-.6L6.63.455C6.542.184 6.287 0 6 0s-.542.184-.632.456L4.16 4.076l-3.603.6c-.275.046-.493.26-.545.533-.052.273.072.55.312.695L3.2 7.63l-1.165 3.493c-.093.28.01.59.25.758.115.08.25.12.382.12.148 0 .295-.05.416-.146L6 9.52l2.917 2.333c.12.098.27.147.416.147.133 0 .267-.04.38-.12.244-.17.346-.478.252-.758L8.8 7.63l2.876-1.725c.24-.144.364-.422.312-.696z"></path>
-                                            </svg>
-                                            </span><span class="icon-ic item__star"><svg xmlns="http://www.w3.org/2000/svg" focusable="false" tabindex="-1" width="12" height="12" viewBox="0 0 12 12"><path class="svg-color--primary" fill="#F6AB3F" d="M11.988 5.21c-.052-.275-.27-.488-.545-.534l-3.604-.6L6.63.455C6.542.184 6.287 0 6 0s-.542.184-.632.456L4.16 4.076l-3.603.6c-.275.046-.493.26-.545.533-.052.273.072.55.312.695L3.2 7.63l-1.165 3.493c-.093.28.01.59.25.758.115.08.25.12.382.12.148 0 .295-.05.416-.146L6 9.52l2.917 2.333c.12.098.27.147.416.147.133 0 .267-.04.38-.12.244-.17.346-.478.252-.758L8.8 7.63l2.876-1.725c.24-.144.364-.422.312-.696z"></path></svg></span></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-8">
-                            <div class="itemdetails">
-
-                                <h3>Ashwem Beach</h3>
-                                <p>North Goa District, Panjim 403509, India</p>
-                                <span class="visittime"><i class="glyphicon glyphicon-time" aria-hidden="true"></i> 2Hrs</span>
-                                <span class="visittime"><i class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></i> 485</span>
-                                <a class="exclude"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span> exclude</a>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="row">
-                        <div class="col-sm-4" style="padding-right:0;">
-                            <img src="https://media-cdn.tripadvisor.com/media/photo-o/0e/47/b6/a3/caption.jpg" class="img-responsive" alt="">
-
-                            <div itemprop="name" class="star">
-                                <div class="item__stars-badges">
-                                    <div class="item__stars-wrp"><span class="icon-ic item__star"><svg xmlns="http://www.w3.org/2000/svg" focusable="false" tabindex="-1" width="12" height="12" viewBox="0 0 12 12"><path class="svg-color--primary" fill="#F6AB3F" d="M11.988 5.21c-.052-.275-.27-.488-.545-.534l-3.604-.6L6.63.455C6.542.184 6.287 0 6 0s-.542.184-.632.456L4.16 4.076l-3.603.6c-.275.046-.493.26-.545.533-.052.273.072.55.312.695L3.2 7.63l-1.165 3.493c-.093.28.01.59.25.758.115.08.25.12.382.12.148 0 .295-.05.416-.146L6 9.52l2.917 2.333c.12.098.27.147.416.147.133 0 .267-.04.38-.12.244-.17.346-.478.252-.758L8.8 7.63l2.876-1.725c.24-.144.364-.422.312-.696z"></path></svg></span>
-                                        <span class="icon-ic item__star">
-                                        <svg xmlns="http://www.w3.org/2000/svg" focusable="false" tabindex="-1" width="12" height="12"
-                                            viewBox="0 0 12 12">
-                                            <path class="svg-color--primary" fill="#F6AB3F" d="M11.988 5.21c-.052-.275-.27-.488-.545-.534l-3.604-.6L6.63.455C6.542.184 6.287 0 6 0s-.542.184-.632.456L4.16 4.076l-3.603.6c-.275.046-.493.26-.545.533-.052.273.072.55.312.695L3.2 7.63l-1.165 3.493c-.093.28.01.59.25.758.115.08.25.12.382.12.148 0 .295-.05.416-.146L6 9.52l2.917 2.333c.12.098.27.147.416.147.133 0 .267-.04.38-.12.244-.17.346-.478.252-.758L8.8 7.63l2.876-1.725c.24-.144.364-.422.312-.696z"></path>
-                                        </svg>
-                                        </span><span class="icon-ic item__star"><svg xmlns="http://www.w3.org/2000/svg" focusable="false" tabindex="-1" width="12" height="12" viewBox="0 0 12 12"><path class="svg-color--primary" fill="#F6AB3F" d="M11.988 5.21c-.052-.275-.27-.488-.545-.534l-3.604-.6L6.63.455C6.542.184 6.287 0 6 0s-.542.184-.632.456L4.16 4.076l-3.603.6c-.275.046-.493.26-.545.533-.052.273.072.55.312.695L3.2 7.63l-1.165 3.493c-.093.28.01.59.25.758.115.08.25.12.382.12.148 0 .295-.05.416-.146L6 9.52l2.917 2.333c.12.098.27.147.416.147.133 0 .267-.04.38-.12.244-.17.346-.478.252-.758L8.8 7.63l2.876-1.725c.24-.144.364-.422.312-.696z"></path></svg></span>
-                                        <span class="icon-ic item__star">
-                                            <svg xmlns="http://www.w3.org/2000/svg" focusable="false" tabindex="-1" width="12"
-                                                height="12" viewBox="0 0 12 12">
-                                                <path class="svg-color--primary" fill="#F6AB3F" d="M11.988 5.21c-.052-.275-.27-.488-.545-.534l-3.604-.6L6.63.455C6.542.184 6.287 0 6 0s-.542.184-.632.456L4.16 4.076l-3.603.6c-.275.046-.493.26-.545.533-.052.273.072.55.312.695L3.2 7.63l-1.165 3.493c-.093.28.01.59.25.758.115.08.25.12.382.12.148 0 .295-.05.416-.146L6 9.52l2.917 2.333c.12.098.27.147.416.147.133 0 .267-.04.38-.12.244-.17.346-.478.252-.758L8.8 7.63l2.876-1.725c.24-.144.364-.422.312-.696z"></path>
-                                            </svg>
-                                            </span><span class="icon-ic item__star"><svg xmlns="http://www.w3.org/2000/svg" focusable="false" tabindex="-1" width="12" height="12" viewBox="0 0 12 12"><path class="svg-color--primary" fill="#F6AB3F" d="M11.988 5.21c-.052-.275-.27-.488-.545-.534l-3.604-.6L6.63.455C6.542.184 6.287 0 6 0s-.542.184-.632.456L4.16 4.076l-3.603.6c-.275.046-.493.26-.545.533-.052.273.072.55.312.695L3.2 7.63l-1.165 3.493c-.093.28.01.59.25.758.115.08.25.12.382.12.148 0 .295-.05.416-.146L6 9.52l2.917 2.333c.12.098.27.147.416.147.133 0 .267-.04.38-.12.244-.17.346-.478.252-.758L8.8 7.63l2.876-1.725c.24-.144.364-.422.312-.696z"></path></svg></span></div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="col-sm-8">
-                            <div class="itemdetails">
-
-                                <h3>Ashwem Beach</h3>
-                                <p>North Goa District, Panjim 403509, India</p>
-                                <span class="visittime"><i class="glyphicon glyphicon-time" aria-hidden="true"></i> 2Hrs</span>
-                                <span class="visittime"><i class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></i> 485</span>
-                                <a class="exclude"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span> exclude</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-sm-4" style="padding-right:0;">
-                            <img src="https://media-cdn.tripadvisor.com/media/photo-s/03/18/b2/26/ashwem-beach.jpg" class="img-responsive" alt="">
-
-                            <div itemprop="name" class="star">
-                                <div class="item__stars-badges">
-                                    <div class="item__stars-wrp"><span class="icon-ic item__star"><svg xmlns="http://www.w3.org/2000/svg" focusable="false" tabindex="-1" width="12" height="12" viewBox="0 0 12 12"><path class="svg-color--primary" fill="#F6AB3F" d="M11.988 5.21c-.052-.275-.27-.488-.545-.534l-3.604-.6L6.63.455C6.542.184 6.287 0 6 0s-.542.184-.632.456L4.16 4.076l-3.603.6c-.275.046-.493.26-.545.533-.052.273.072.55.312.695L3.2 7.63l-1.165 3.493c-.093.28.01.59.25.758.115.08.25.12.382.12.148 0 .295-.05.416-.146L6 9.52l2.917 2.333c.12.098.27.147.416.147.133 0 .267-.04.38-.12.244-.17.346-.478.252-.758L8.8 7.63l2.876-1.725c.24-.144.364-.422.312-.696z"></path></svg></span>
-                                        <span class="icon-ic item__star">
-                                        <svg xmlns="http://www.w3.org/2000/svg" focusable="false" tabindex="-1" width="12" height="12"
-                                            viewBox="0 0 12 12">
-                                            <path class="svg-color--primary" fill="#F6AB3F" d="M11.988 5.21c-.052-.275-.27-.488-.545-.534l-3.604-.6L6.63.455C6.542.184 6.287 0 6 0s-.542.184-.632.456L4.16 4.076l-3.603.6c-.275.046-.493.26-.545.533-.052.273.072.55.312.695L3.2 7.63l-1.165 3.493c-.093.28.01.59.25.758.115.08.25.12.382.12.148 0 .295-.05.416-.146L6 9.52l2.917 2.333c.12.098.27.147.416.147.133 0 .267-.04.38-.12.244-.17.346-.478.252-.758L8.8 7.63l2.876-1.725c.24-.144.364-.422.312-.696z"></path>
-                                        </svg>
-                                        </span><span class="icon-ic item__star"><svg xmlns="http://www.w3.org/2000/svg" focusable="false" tabindex="-1" width="12" height="12" viewBox="0 0 12 12"><path class="svg-color--primary" fill="#F6AB3F" d="M11.988 5.21c-.052-.275-.27-.488-.545-.534l-3.604-.6L6.63.455C6.542.184 6.287 0 6 0s-.542.184-.632.456L4.16 4.076l-3.603.6c-.275.046-.493.26-.545.533-.052.273.072.55.312.695L3.2 7.63l-1.165 3.493c-.093.28.01.59.25.758.115.08.25.12.382.12.148 0 .295-.05.416-.146L6 9.52l2.917 2.333c.12.098.27.147.416.147.133 0 .267-.04.38-.12.244-.17.346-.478.252-.758L8.8 7.63l2.876-1.725c.24-.144.364-.422.312-.696z"></path></svg></span>
-                                        <span class="icon-ic item__star">
-                                            <svg xmlns="http://www.w3.org/2000/svg" focusable="false" tabindex="-1" width="12"
-                                                height="12" viewBox="0 0 12 12">
-                                                <path class="svg-color--primary" fill="#F6AB3F" d="M11.988 5.21c-.052-.275-.27-.488-.545-.534l-3.604-.6L6.63.455C6.542.184 6.287 0 6 0s-.542.184-.632.456L4.16 4.076l-3.603.6c-.275.046-.493.26-.545.533-.052.273.072.55.312.695L3.2 7.63l-1.165 3.493c-.093.28.01.59.25.758.115.08.25.12.382.12.148 0 .295-.05.416-.146L6 9.52l2.917 2.333c.12.098.27.147.416.147.133 0 .267-.04.38-.12.244-.17.346-.478.252-.758L8.8 7.63l2.876-1.725c.24-.144.364-.422.312-.696z"></path>
-                                            </svg>
-                                            </span><span class="icon-ic item__star"><svg xmlns="http://www.w3.org/2000/svg" focusable="false" tabindex="-1" width="12" height="12" viewBox="0 0 12 12"><path class="svg-color--primary" fill="#F6AB3F" d="M11.988 5.21c-.052-.275-.27-.488-.545-.534l-3.604-.6L6.63.455C6.542.184 6.287 0 6 0s-.542.184-.632.456L4.16 4.076l-3.603.6c-.275.046-.493.26-.545.533-.052.273.072.55.312.695L3.2 7.63l-1.165 3.493c-.093.28.01.59.25.758.115.08.25.12.382.12.148 0 .295-.05.416-.146L6 9.52l2.917 2.333c.12.098.27.147.416.147.133 0 .267-.04.38-.12.244-.17.346-.478.252-.758L8.8 7.63l2.876-1.725c.24-.144.364-.422.312-.696z"></path></svg></span></div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="col-sm-8">
-                            <div class="itemdetails">
-
-                                <h3>Ashwem Beach</h3>
-                                <p>North Goa District, Panjim 403509, India</p>
-                                <span class="visittime"><i class="glyphicon glyphicon-time" aria-hidden="true"></i> 2Hrs</span>
-                                <span class="visittime"><i class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></i> 485</span>
-                                <a class="exclude"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span> exclude</a>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="row">
-                        <div class="col-sm-4" style="padding-right:0;">
-                            <img src="https://media-cdn.tripadvisor.com/media/photo-o/0e/47/b6/a3/caption.jpg" class="img-responsive" alt="">
-
-                            <div itemprop="name" class="star">
-                                <div class="item__stars-badges">
-                                    <div class="item__stars-wrp"><span class="icon-ic item__star"><svg xmlns="http://www.w3.org/2000/svg" focusable="false" tabindex="-1" width="12" height="12" viewBox="0 0 12 12"><path class="svg-color--primary" fill="#F6AB3F" d="M11.988 5.21c-.052-.275-.27-.488-.545-.534l-3.604-.6L6.63.455C6.542.184 6.287 0 6 0s-.542.184-.632.456L4.16 4.076l-3.603.6c-.275.046-.493.26-.545.533-.052.273.072.55.312.695L3.2 7.63l-1.165 3.493c-.093.28.01.59.25.758.115.08.25.12.382.12.148 0 .295-.05.416-.146L6 9.52l2.917 2.333c.12.098.27.147.416.147.133 0 .267-.04.38-.12.244-.17.346-.478.252-.758L8.8 7.63l2.876-1.725c.24-.144.364-.422.312-.696z"></path></svg></span>
-                                        <span class="icon-ic item__star">
-                                        <svg xmlns="http://www.w3.org/2000/svg" focusable="false" tabindex="-1" width="12" height="12"
-                                            viewBox="0 0 12 12">
-                                            <path class="svg-color--primary" fill="#F6AB3F" d="M11.988 5.21c-.052-.275-.27-.488-.545-.534l-3.604-.6L6.63.455C6.542.184 6.287 0 6 0s-.542.184-.632.456L4.16 4.076l-3.603.6c-.275.046-.493.26-.545.533-.052.273.072.55.312.695L3.2 7.63l-1.165 3.493c-.093.28.01.59.25.758.115.08.25.12.382.12.148 0 .295-.05.416-.146L6 9.52l2.917 2.333c.12.098.27.147.416.147.133 0 .267-.04.38-.12.244-.17.346-.478.252-.758L8.8 7.63l2.876-1.725c.24-.144.364-.422.312-.696z"></path>
-                                        </svg>
-                                        </span><span class="icon-ic item__star"><svg xmlns="http://www.w3.org/2000/svg" focusable="false" tabindex="-1" width="12" height="12" viewBox="0 0 12 12"><path class="svg-color--primary" fill="#F6AB3F" d="M11.988 5.21c-.052-.275-.27-.488-.545-.534l-3.604-.6L6.63.455C6.542.184 6.287 0 6 0s-.542.184-.632.456L4.16 4.076l-3.603.6c-.275.046-.493.26-.545.533-.052.273.072.55.312.695L3.2 7.63l-1.165 3.493c-.093.28.01.59.25.758.115.08.25.12.382.12.148 0 .295-.05.416-.146L6 9.52l2.917 2.333c.12.098.27.147.416.147.133 0 .267-.04.38-.12.244-.17.346-.478.252-.758L8.8 7.63l2.876-1.725c.24-.144.364-.422.312-.696z"></path></svg></span>
-                                        <span class="icon-ic item__star">
-                                            <svg xmlns="http://www.w3.org/2000/svg" focusable="false" tabindex="-1" width="12"
-                                                height="12" viewBox="0 0 12 12">
-                                                <path class="svg-color--primary" fill="#F6AB3F" d="M11.988 5.21c-.052-.275-.27-.488-.545-.534l-3.604-.6L6.63.455C6.542.184 6.287 0 6 0s-.542.184-.632.456L4.16 4.076l-3.603.6c-.275.046-.493.26-.545.533-.052.273.072.55.312.695L3.2 7.63l-1.165 3.493c-.093.28.01.59.25.758.115.08.25.12.382.12.148 0 .295-.05.416-.146L6 9.52l2.917 2.333c.12.098.27.147.416.147.133 0 .267-.04.38-.12.244-.17.346-.478.252-.758L8.8 7.63l2.876-1.725c.24-.144.364-.422.312-.696z"></path>
-                                            </svg>
-                                            </span><span class="icon-ic item__star"><svg xmlns="http://www.w3.org/2000/svg" focusable="false" tabindex="-1" width="12" height="12" viewBox="0 0 12 12"><path class="svg-color--primary" fill="#F6AB3F" d="M11.988 5.21c-.052-.275-.27-.488-.545-.534l-3.604-.6L6.63.455C6.542.184 6.287 0 6 0s-.542.184-.632.456L4.16 4.076l-3.603.6c-.275.046-.493.26-.545.533-.052.273.072.55.312.695L3.2 7.63l-1.165 3.493c-.093.28.01.59.25.758.115.08.25.12.382.12.148 0 .295-.05.416-.146L6 9.52l2.917 2.333c.12.098.27.147.416.147.133 0 .267-.04.38-.12.244-.17.346-.478.252-.758L8.8 7.63l2.876-1.725c.24-.144.364-.422.312-.696z"></path></svg></span></div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="col-sm-8">
-                            <div class="itemdetails">
-
-                                <h3>Ashwem Beach</h3>
-                                <p>North Goa District, Panjim 403509, India</p>
-                                <span class="visittime"><i class="glyphicon glyphicon-time" aria-hidden="true"></i> 2Hrs</span>
-                                <span class="visittime"><i class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></i> 485</span>
-                                <a class="exclude"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span> exclude</a>
-                            </div>
-                        </div>
-                    </div>
 
 
                 </div>
             </div>
         </div>
+    </section>
     </section>
 
     <script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
@@ -404,6 +117,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="assets/js/bootstrap.min.js"></script>
+
     <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&key=AIzaSyDVDNY_xUq0LKpNswJ_d4U5_r2u2hmd1m4"></script>
     <script>
         $('#introslide').css({
@@ -414,7 +128,6 @@
                 'height': (($(window).height()) - 170) + 'px'
             });
         });
-
 
         $('.result').css({
             'height': (($(window).height()) - 40) + 'px'
@@ -433,14 +146,15 @@
                 'height': (($(window).height()) - 175) + 'px'
             });
         });
-        placelisting
     </script>
     <script type="text/javascript">
         var directionDisplay;
         var directionsService = new google.maps.DirectionsService();
         var map;
+        var myHomeLocation = "a-42/6, 6th floor, pinnacle tower, exzeo software, noida sector-62, up-201301";
 
-        function initialize() {
+        function initialize(origin) {
+
             directionsDisplay = new google.maps.DirectionsRenderer();
             var chicago = new google.maps.LatLng(28.626663, 77.209015);
             var myOptions = {
@@ -458,11 +172,11 @@
                 type: "GET",
                 url: "/callgoogleapi",
                 error: function (jqXHR, textStatus, errorThrown) {
-                    debugger;
+
                     console.log("error");
                 },
                 success: function (data) {
-                    debugger;
+
                     // var jsonData = JSON.parse(data);
                     var jsonData = data;
                     var addressArray = [];
@@ -481,25 +195,29 @@
                         console.log("location");
                         console.log(addressArray);
                     }
-                    DestinationSourceAndTimerRoute(directionsService, directionsDisplay, addressArray, 6);
+
+                    //DestinationSourceAndTimerRoute(directionsService, directionsDisplay, addressArray, 6);
                     // calculateAndDisplayRoute(directionsService, directionsDisplay, addressArray);
+
+                    calculateAndDisplayRoute(directionsService, directionsDisplay, addressArray, origin);
                 }
             });
         }
 
         //initail call on load
-        function calculateAndDisplayRoute(directionsService, directionsDisplay, addressArray) {
+        function calculateAndDisplayRoute(directionsService, directionsDisplay, addressArray, origin) {
             var waypts = [];
             // var checkboxArray = document.getElementById('waypoints');
             var checkboxArray = addressArray;
-            // for (var i = 0; i < checkboxArray.length; i++) {
-            //     waypts.push({
-            //         location: checkboxArray[i].address,
-            //         stopover: true
-            //     });
-            // }
+            for (var i = 0; i < checkboxArray.length; i++) {
+                waypts.push({
+                    location: checkboxArray[i].address,
+                    stopover: true
+                });
+            }
+            var origin = origin === undefined || origin.length <= 0 ? myHomeLocation : origin;
             directionsService.route({
-                origin: "TATA Housing Group, A-13/1, Synergy Tower, 5th Floor, Sector-62, Block B, Industrial Area, Sector 62, Noida, Uttar Pradesh 201301, India",
+                origin: origin,
                 // destination: document.getElementById('end').value,
                 //  origin: checkboxArray[0].address,
                 destination: checkboxArray[checkboxArray.length - 1].address,
@@ -511,19 +229,19 @@
                     directionsDisplay.setDirections(response);
                     debugger;
                     var route = response.routes[0];
-                    var summaryPanel = document.getElementById('directions_panel');
-                    summaryPanel.innerHTML = '';
-                    // For each route, display summary information.
-                    for (var i = 0; i < route.legs.length; i++) {
-                        debugger;
-                        var routeSegment = i + 1;
-                        summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment +
-                            '</b><br>';
-                        summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
-                        summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
-                        summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
-                        summaryPanel.innerHTML += route.legs[i].duration.text + '<br><br>';
-                    }
+                    // var summaryPanel = document.getElementById('directions_panel');
+                    // summaryPanel.innerHTML = '';
+                    // // For each route, display summary information.
+                    // for (var i = 0; i < route.legs.length; i++) {
+
+                    //     var routeSegment = i + 1;
+                    //     summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment +
+                    //         '</b><br>';
+                    //     summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
+                    //     summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
+                    //     summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
+                    //     summaryPanel.innerHTML += route.legs[i].duration.text + '<br><br>';
+                    // }
                 } else {
                     window.alert('Directions request failed due to ' + status);
                 }
@@ -555,19 +273,19 @@
                     //console.log(drawloc);
                     directionsDisplay.setDirections(drawloc);
                     var route = response.routes[0];
-                    var summaryPanel = document.getElementById('directions_panel');
-                    summaryPanel.innerHTML = '';
-                    // For each route, display summary information.
-                    for (var i = 0; i < route.legs.length; i++) {
-                        debugger;
-                        var routeSegment = i + 1;
-                        summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment +
-                            '</b><br>';
-                        summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
-                        summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
-                        summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
-                        summaryPanel.innerHTML += route.legs[i].duration.text + '<br><br>';
-                    }
+                    // var summaryPanel = document.getElementById('directions_panel');
+                    // summaryPanel.innerHTML = '';
+                    // // For each route, display summary information.
+                    // for (var i = 0; i < route.legs.length; i++) {
+
+                    //     var routeSegment = i + 1;
+                    //     summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment +
+                    //         '</b><br>';
+                    //     summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
+                    //     summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
+                    //     summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
+                    //     summaryPanel.innerHTML += route.legs[i].duration.text + '<br><br>';
+                    // }
                 } else {
                     window.alert('Directions request failed due to ' + status);
                 }
@@ -629,11 +347,29 @@
             });
         }
 
-
         function detectmylocation() {
-            document.getElementById("result").value =
-                "TATA Housing Group, A-13/1, Synergy Tower, 5th Floor, Sector-62, Block B, Industrial Area, Sector 62, Noida, Uttar Pradesh 201301, India";
+            document.getElementById("result").value = myHomeLocation;
         }
+
+        function changelocation() {
+
+            initialize($("#result").val());
+        }
+        // function detectmylocation(){
+        //     $.ajax({
+        //         type: "GET",
+        //         url: "/myclocation",
+        //         error: function (jqXHR, textStatus, errorThrown) {
+        //             
+        //             console.log("error");
+        //             return false;
+        //         },
+        //         success: function (data) {
+        //             
+        //             // var jsonData = JSON.parse(data);
+        //         }
+        //     });
+        // }
 
         //TimerCalculator
         function TimerCalc(res, timerhour) {
@@ -645,13 +381,35 @@
                 } else
                     sum = sum + parseInt(timercall[i].duration.text)
             }
+            //for (j = 0; j < res.geocoded_waypoints.length; j++) {
+            //   if (j >= i) {
+            // res.geocoded_waypoints.slice(0, j);
             res.geocoded_waypoints = res.geocoded_waypoints.slice(0, i);
             res.routes[0].legs = res.routes[0].legs.slice(0, i);
             res.routes[0].waypoint_order = res.routes[0].waypoint_order.slice(0, i);
-            debugger;
+            //  }
+            //return resp;
+            //  }
+
+
             res.request.destination.query = res.routes[0].legs[i - 1].end_address;
             return res;
         }
+        $.ajax({
+            type: "GET",
+            url: "/callgoogleapi",
+            error: function (jqXHR, textStatus, errorThrown) {
+                debugger;
+                console.log("error");
+            },
+            success: function (data) {
+                debugger;
+                createDiv(data);
+                // var jsonData = JSON.parse(data);
+
+            }
+        });
+
 
         //Timerwith source and destinationCalculator
         function TimerSDCalc(res, timermin) {
@@ -737,6 +495,22 @@
             
         //     }
        // }
+
+
+        function createDiv(data) {
+            var $mainContainer = $(".placelisting");
+            for (i = 0; i < data.length; i++) {
+                var newDiv = $('<div class="row"> <div class="col-sm-4" style="padding-right:0;"> <img src="' + data[0]
+                    .icon +
+                    '" class="img-responsive" alt=""> <div itemprop="name" class="star"> <div class="item__stars-badges"> <div class="item__stars-wrp"><span class="icon-ic item__star"><svg xmlns="http://www.w3.org/2000/svg" focusable="false" tabindex="-1" width="12" height="12" viewBox="0 0 12 12"><path class="svg-color--primary" fill="#F6AB3F" d="M11.988 5.21c-.052-.275-.27-.488-.545-.534l-3.604-.6L6.63.455C6.542.184 6.287 0 6 0s-.542.184-.632.456L4.16 4.076l-3.603.6c-.275.046-.493.26-.545.533-.052.273.072.55.312.695L3.2 7.63l-1.165 3.493c-.093.28.01.59.25.758.115.08.25.12.382.12.148 0 .295-.05.416-.146L6 9.52l2.917 2.333c.12.098.27.147.416.147.133 0 .267-.04.38-.12.244-.17.346-.478.252-.758L8.8 7.63l2.876-1.725c.24-.144.364-.422.312-.696z"></path></svg></span> <span class="icon-ic item__star"> <svg xmlns="http://www.w3.org/2000/svg" focusable="false" tabindex="-1" width="12" height="12" viewBox="0 0 12 12"> <path class="svg-color--primary" fill="#F6AB3F" d="M11.988 5.21c-.052-.275-.27-.488-.545-.534l-3.604-.6L6.63.455C6.542.184 6.287 0 6 0s-.542.184-.632.456L4.16 4.076l-3.603.6c-.275.046-.493.26-.545.533-.052.273.072.55.312.695L3.2 7.63l-1.165 3.493c-.093.28.01.59.25.758.115.08.25.12.382.12.148 0 .295-.05.416-.146L6 9.52l2.917 2.333c.12.098.27.147.416.147.133 0 .267-.04.38-.12.244-.17.346-.478.252-.758L8.8 7.63l2.876-1.725c.24-.144.364-.422.312-.696z"></path> </svg> </span><span class="icon-ic item__star"><svg xmlns="http://www.w3.org/2000/svg" focusable="false" tabindex="-1" width="12" height="12" viewBox="0 0 12 12"><path class="svg-color--primary" fill="#F6AB3F" d="M11.988 5.21c-.052-.275-.27-.488-.545-.534l-3.604-.6L6.63.455C6.542.184 6.287 0 6 0s-.542.184-.632.456L4.16 4.076l-3.603.6c-.275.046-.493.26-.545.533-.052.273.072.55.312.695L3.2 7.63l-1.165 3.493c-.093.28.01.59.25.758.115.08.25.12.382.12.148 0 .295-.05.416-.146L6 9.52l2.917 2.333c.12.098.27.147.416.147.133 0 .267-.04.38-.12.244-.17.346-.478.252-.758L8.8 7.63l2.876-1.725c.24-.144.364-.422.312-.696z"></path></svg></span> <span class="icon-ic item__star"> <svg xmlns="http://www.w3.org/2000/svg" focusable="false" tabindex="-1" width="12" height="12" viewBox="0 0 12 12"> <path class="svg-color--primary" fill="#F6AB3F" d="M11.988 5.21c-.052-.275-.27-.488-.545-.534l-3.604-.6L6.63.455C6.542.184 6.287 0 6 0s-.542.184-.632.456L4.16 4.076l-3.603.6c-.275.046-.493.26-.545.533-.052.273.072.55.312.695L3.2 7.63l-1.165 3.493c-.093.28.01.59.25.758.115.08.25.12.382.12.148 0 .295-.05.416-.146L6 9.52l2.917 2.333c.12.098.27.147.416.147.133 0 .267-.04.38-.12.244-.17.346-.478.252-.758L8.8 7.63l2.876-1.725c.24-.144.364-.422.312-.696z"></path> </svg> </span><span class="icon-ic item__star"><svg xmlns="http://www.w3.org/2000/svg" focusable="false" tabindex="-1" width="12" height="12" viewBox="0 0 12 12"><path class="svg-color--primary" fill="#F6AB3F" d="M11.988 5.21c-.052-.275-.27-.488-.545-.534l-3.604-.6L6.63.455C6.542.184 6.287 0 6 0s-.542.184-.632.456L4.16 4.076l-3.603.6c-.275.046-.493.26-.545.533-.052.273.072.55.312.695L3.2 7.63l-1.165 3.493c-.093.28.01.59.25.758.115.08.25.12.382.12.148 0 .295-.05.416-.146L6 9.52l2.917 2.333c.12.098.27.147.416.147.133 0 .267-.04.38-.12.244-.17.346-.478.252-.758L8.8 7.63l2.876-1.725c.24-.144.364-.422.312-.696z"></path></svg></span></div> </div> </div> </div> <div class="col-sm-8"> <div class="itemdetails"> <h3>' +
+                    data[i].name + '</h3> <p>' + data[i].address +
+                    '</p> <span class="visittime"><i class="glyphicon glyphicon-time" aria-hidden="true"></i> 2Hrs</span> <span class="visittime"><i class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></i> ' +
+                    data[i].rating +
+                    '</span> <a class="exclude"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span> exclude</a> </div> </div> </div>'
+                );
+                $mainContainer.append(newDiv);
+            }
+        }
 
     </script>
 </body>
