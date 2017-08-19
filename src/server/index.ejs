@@ -462,8 +462,53 @@
                 }
             });
         }
-
+        //initail call on load
         function calculateAndDisplayRoute(directionsService, directionsDisplay, addressArray) {
+            var waypts = [];
+            // var checkboxArray = document.getElementById('waypoints');
+            var checkboxArray = addressArray;
+            for (var i = 0; i < checkboxArray.length; i++) {
+                waypts.push({
+                    location: checkboxArray[i].address,
+                    stopover: true
+                });
+            }
+            directionsService.route({
+                 origin: "TATA Housing Group, A-13/1, Synergy Tower, 5th Floor, Sector-62, Block B, Industrial Area, Sector 62, Noida, Uttar Pradesh 201301, India",
+                // destination: document.getElementById('end').value,
+              //  origin: checkboxArray[0].address,
+                destination: checkboxArray[checkboxArray.length - 1].address,
+                waypoints: waypts,
+                optimizeWaypoints: true,
+                travelMode: 'DRIVING'
+            }, function (response, status) {
+                if (status === 'OK') {
+                    debugger;
+                    var time = 300;
+                    var drawloc = TimerCalc(response, time);
+                    //console.log(drawloc);
+                    directionsDisplay.setDirections(drawloc);
+                    var route = response.routes[0];
+                    var summaryPanel = document.getElementById('directions_panel');
+                    summaryPanel.innerHTML = '';
+                    // For each route, display summary information.
+                    for (var i = 0; i < route.legs.length; i++) {
+                        debugger;
+                        var routeSegment = i + 1;
+                        summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment +
+                            '</b><br>';
+                        summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
+                        summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
+                        summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
+                        summaryPanel.innerHTML += route.legs[i].duration.text + '<br><br>';
+                    }
+                } else {
+                    window.alert('Directions request failed due to ' + status);
+                }
+            });
+        }
+        // call using timer
+        function calculateAndTimerRoute(directionsService, directionsDisplay, addressArray) {
             var waypts = [];
             // var checkboxArray = document.getElementById('waypoints');
             var checkboxArray = addressArray;
@@ -483,6 +528,9 @@
                 travelMode: 'DRIVING'
             }, function (response, status) {
                 if (status === 'OK') {
+                    //hour to min 
+                    // var time = 6 * 60;
+                    //  var drawloc = TimerCalc(response.routes[0].legs, time)
                     directionsDisplay.setDirections(response);
                     var route = response.routes[0];
                     var summaryPanel = document.getElementById('directions_panel');
@@ -504,52 +552,6 @@
             });
         }
 
-        function calcRoute() {
-            var first = new google.maps.LatLng(28.5244281, 77.18545589999999);
-            var second = new google.maps.LatLng(28.62705470000001, 77.21662669999999);
-            var third = new google.maps.LatLng(28.612912, 77.22950969999999);
-            var fourth = new google.maps.LatLng(28.6561592, 77.2410203);
-            var request = {
-                origin: "Ashoka Road, Connaught Place, Next to Grand Post Office Hanuman Road Area, Connaught Place New Delhi, Delhi 110001 India",
-                destination: "Nh 24, New Delhi 110002, India",
-                waypoints: [{
-                        location: first,
-                        stopover: false
-                    },
-                    {
-                        location: second,
-                        stopover: false
-                    }, {
-                        location: third,
-                        stopover: false
-                    }, {
-                        location: fourth,
-                        stopover: false
-                    }
-                ],
-                optimizeWaypoints: true,
-                travelMode: google.maps.DirectionsTravelMode.WALKING
-            };
-            directionsService.route(request, function (response, status) {
-                if (status == google.maps.DirectionsStatus.OK) {
-                    directionsDisplay.setDirections(response);
-                    var route = response.routes[0];
-                    var summaryPanel = document.getElementById("directions_panel");
-                    summaryPanel.innerHTML = "";
-                    // For each route, display summary information.
-                    for (var i = 0; i < route.legs.length; i++) {
-                        var routeSegment = i + 1;
-                        summaryPanel.innerHTML += "<b>Route Segment: " + routeSegment + "</b><br />";
-                        summaryPanel.innerHTML += route.legs[i].start_address + " to ";
-                        summaryPanel.innerHTML += route.legs[i].end_address + "<br />";
-                        summaryPanel.innerHTML += route.legs[i].distance.text + "<br /><br />";
-                        summaryPanel.innerHTML += route.legs[i].duration.text + "<br /><br />";
-                    }
-                } else {
-                    alert("directions response " + status);
-                }
-            });
-        }
 
         function detectmylocation() {
             document.getElementById("result").value = "TATA Housing Group, A-13/1, Synergy Tower, 5th Floor, Sector-62, Block B, Industrial Area, Sector 62, Noida, Uttar Pradesh 201301, India";
@@ -571,6 +573,31 @@
         //         }
         //     });
         // }
+
+        //TimerCalculator
+        function TimerCalc(res, timerhour) {
+            var timercall = res.routes[0].legs;
+            var sum = 0;
+            for (i = 0; i < timercall.length; i++) {
+                if (sum >= timerhour) {
+                    break;
+                } else
+                    sum = sum + parseInt(timercall[i].duration.text)
+            }
+            //for (j = 0; j < res.geocoded_waypoints.length; j++) {
+             //   if (j >= i) {
+                    // res.geocoded_waypoints.slice(0, j);
+                    res.geocoded_waypoints = res.geocoded_waypoints.slice(0, i);
+                    res.routes[0].legs = res.routes[0].legs.slice(0, i);
+                    res.routes[0].waypoint_order = res.routes[0].waypoint_order.slice(0, i);
+              //  }
+                //return resp;
+          //  }
+            debugger;
+           res.request.destination.query= res.routes[0].legs[i-1].end_address;
+           return res;
+        }
+
     </script>
 </body>
 
