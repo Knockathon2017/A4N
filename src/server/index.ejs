@@ -45,7 +45,7 @@
                             <div class="searchTour">
                                 <input type="text" id="result" placeholder="Exzeo Software, Sector 62, Noida" class="form-control textbox" style="padding-left:15px;">
                                 <span>From</span>
-                                <a href="javascript:void(0)"  class="clocation" onclick="detectmylocation()" title="Click for current location"><i class="glyphicon glyphicon-map-marker" aria-hidden="true"></i></a>
+                                <a href="javascript:void(0)" class="clocation" onclick="detectmylocation()" title="Click for current location"><i class="glyphicon glyphicon-map-marker" aria-hidden="true"></i></a>
                             </div>
                         </div>
                         <div class="col-sm-5 col-xs-12">
@@ -467,6 +467,49 @@
             var waypts = [];
             // var checkboxArray = document.getElementById('waypoints');
             var checkboxArray = addressArray;
+            // for (var i = 0; i < checkboxArray.length; i++) {
+            //     waypts.push({
+            //         location: checkboxArray[i].address,
+            //         stopover: true
+            //     });
+            // }
+            debbugger;
+            directionsService.route({
+                origin: "TATA Housing Group, A-13/1, Synergy Tower, 5th Floor, Sector-62, Block B, Industrial Area, Sector 62, Noida, Uttar Pradesh 201301, India",
+                // destination: document.getElementById('end').value,
+                //  origin: checkboxArray[0].address,
+                destination: checkboxArray[checkboxArray.length - 1].address,
+                waypoints: waypts,
+                optimizeWaypoints: true,
+                travelMode: 'DRIVING'
+            }, function (response, status) {
+                if (status === 'OK') {
+                    directionsDisplay.setDirections(response);
+                    debugger;
+                    var route = response.routes[0];
+                    var summaryPanel = document.getElementById('directions_panel');
+                    summaryPanel.innerHTML = '';
+                    // For each route, display summary information.
+                    for (var i = 0; i < route.legs.length; i++) {
+                        debugger;
+                        var routeSegment = i + 1;
+                        summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment +
+                            '</b><br>';
+                        summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
+                        summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
+                        summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
+                        summaryPanel.innerHTML += route.legs[i].duration.text + '<br><br>';
+                    }
+                } else {
+                    window.alert('Directions request failed due to ' + status);
+                }
+            });
+        }
+        // call using timer
+        function SourceAndTimerRoute(directionsService, directionsDisplay, addressArray) {
+            var waypts = [];
+            // var checkboxArray = document.getElementById('waypoints');
+            var checkboxArray = addressArray;
             for (var i = 0; i < checkboxArray.length; i++) {
                 waypts.push({
                     location: checkboxArray[i].address,
@@ -474,16 +517,15 @@
                 });
             }
             directionsService.route({
-                 origin: "TATA Housing Group, A-13/1, Synergy Tower, 5th Floor, Sector-62, Block B, Industrial Area, Sector 62, Noida, Uttar Pradesh 201301, India",
+                // origin: document.getElementById('start').value,
                 // destination: document.getElementById('end').value,
-              //  origin: checkboxArray[0].address,
+                origin: checkboxArray[0].address,
                 destination: checkboxArray[checkboxArray.length - 1].address,
                 waypoints: waypts,
                 optimizeWaypoints: true,
                 travelMode: 'DRIVING'
             }, function (response, status) {
                 if (status === 'OK') {
-                    debugger;
                     var time = 300;
                     var drawloc = TimerCalc(response, time);
                     //console.log(drawloc);
@@ -507,8 +549,9 @@
                 }
             });
         }
-        // call using timer
-        function calculateAndTimerRoute(directionsService, directionsDisplay, addressArray) {
+
+        // call using timerwith destination
+        function DestinationSourceAndTimerRoute(directionsService, directionsDisplay, addressArray,destination,Timer) {
             var waypts = [];
             // var checkboxArray = document.getElementById('waypoints');
             var checkboxArray = addressArray;
@@ -528,10 +571,10 @@
                 travelMode: 'DRIVING'
             }, function (response, status) {
                 if (status === 'OK') {
-                    //hour to min 
-                    // var time = 6 * 60;
-                    //  var drawloc = TimerCalc(response.routes[0].legs, time)
-                    directionsDisplay.setDirections(response);
+                    var time = 300;
+                    var drawloc = TimerCalcWithDestination(response, time,checkboxArray[checkboxArray.length - 1].address);
+                    //console.log(drawloc);
+                    directionsDisplay.setDirections(drawloc);
                     var route = response.routes[0];
                     var summaryPanel = document.getElementById('directions_panel');
                     summaryPanel.innerHTML = '';
@@ -552,27 +595,10 @@
             });
         }
 
-
         function detectmylocation() {
-            document.getElementById("result").value = "TATA Housing Group, A-13/1, Synergy Tower, 5th Floor, Sector-62, Block B, Industrial Area, Sector 62, Noida, Uttar Pradesh 201301, India";
+            document.getElementById("result").value =
+                "TATA Housing Group, A-13/1, Synergy Tower, 5th Floor, Sector-62, Block B, Industrial Area, Sector 62, Noida, Uttar Pradesh 201301, India";
         }
-
-
-        // function detectmylocation(){
-        //     $.ajax({
-        //         type: "GET",
-        //         url: "/myclocation",
-        //         error: function (jqXHR, textStatus, errorThrown) {
-        //             debugger;
-        //             console.log("error");
-        //             return false;
-        //         },
-        //         success: function (data) {
-        //             debugger;
-        //             // var jsonData = JSON.parse(data);
-        //         }
-        //     });
-        // }
 
         //TimerCalculator
         function TimerCalc(res, timerhour) {
@@ -584,20 +610,31 @@
                 } else
                     sum = sum + parseInt(timercall[i].duration.text)
             }
-            //for (j = 0; j < res.geocoded_waypoints.length; j++) {
-             //   if (j >= i) {
-                    // res.geocoded_waypoints.slice(0, j);
-                    res.geocoded_waypoints = res.geocoded_waypoints.slice(0, i);
-                    res.routes[0].legs = res.routes[0].legs.slice(0, i);
-                    res.routes[0].waypoint_order = res.routes[0].waypoint_order.slice(0, i);
-              //  }
-                //return resp;
-          //  }
+            res.geocoded_waypoints = res.geocoded_waypoints.slice(0, i);
+            res.routes[0].legs = res.routes[0].legs.slice(0, i);
+            res.routes[0].waypoint_order = res.routes[0].waypoint_order.slice(0, i);
             debugger;
-           res.request.destination.query= res.routes[0].legs[i-1].end_address;
-           return res;
+            res.request.destination.query = res.routes[0].legs[i - 1].end_address;
+            return res;
         }
 
+        //TimerCalculator
+        function TimerCalcWithDestination(res, timerhour, detination) {
+            debugger;
+            var timercall = res.routes[0].legs;
+            var sum = 0;
+            for (i = 0; i < timercall.length; i++) {
+                if (sum >= timerhour) {
+                    break;
+                } else
+                    sum = sum + parseInt(timercall[i].duration.text)
+            }
+            res.geocoded_waypoints = res.geocoded_waypoints.slice(0, i);
+            res.routes[0].legs = res.routes[0].legs.slice(0, i);
+            res.routes[0].waypoint_order = res.routes[0].waypoint_order.slice(0, i);
+            debugger;
+            return res;
+        }
     </script>
 </body>
 
