@@ -43,14 +43,14 @@
                     <div class="row">
                         <div class="col-sm-4 col-xs-12">
                             <div class="searchTour">
-                                <input type="text" id="result" placeholder="Select Current location/City" class="form-control textbox" style="padding-left:15px;">
+                                <input type="text" id="result" placeholder="Current location/City" class="form-control textbox" style="padding-left:15px;">
                                 <span>From</span>
                                 <a href="javascript:void(0)" class="clocation" onclick="detectmylocation()" title="Click for current location"><i class="glyphicon glyphicon-map-marker" aria-hidden="true"></i></a>
                             </div>
                         </div>
                         <div class="col-sm-4 col-xs-12">
                             <div class="searchTour">
-                                <input type="text" id="destinationinput" placeholder="New Delhi" class="form-control textbox">
+                                <input type="text" id="destinationinput" placeholder="Tourist Place" class="form-control textbox">
                                 <span>To</span>
                             </div>
                         </div>
@@ -217,7 +217,7 @@
                                     var dest = addwithName[i].address;
                                     DestinationSourceAndTimerRoute(directionsService, directionsDisplay,
                                         addressArray,
-                                        dest, sourtour, parseInt($(
+                                        dest,origin, parseInt($(
                                             "#timeinput").val()));
                                     break;
                                 }
@@ -229,7 +229,7 @@
                                 .val()) !==
                             0) {
                             SourceAndTimerRoute(directionsService, directionsDisplay, addressArray,
-                                sourtour, parseInt($("#timeinput").val()));
+                                origin, parseInt($("#timeinput").val()));
                         } else {
                             calculateAndDisplayRoute(directionsService, directionsDisplay, addressArray,
                                 origin);
@@ -340,7 +340,7 @@
             }, function (response, status) {
                 if (status === 'OK') {
                     if (timer == 0 || timer === undefined)
-                        directionsDisplay.setDirections(drawloc);
+                        directionsDisplay.setDirections(response);
                     else {
                         var timeinmin = timer * 60;
                         //var timeinmin = 65;
@@ -432,7 +432,7 @@
                 } else {
                     //var loc =timercall[i].end_address;
                     newlocat.push(timercall[i].end_address);
-                    sum = sum + parseInt(timercall[i].duration.text);
+                    sum = sum + parseInt(timercall[i].duration.text) + 60;
                 }
             }
             for (var i = 0; i < newlocat.length; i++) {
@@ -468,7 +468,7 @@
                 if (sum >= timerhour) {
                     break;
                 } else
-                    sum = sum + parseInt(timercall[i].duration.text)
+                    sum = sum + parseInt(timercall[i].duration.text)+60
             }
             res.geocoded_waypoints = res.geocoded_waypoints.slice(0, i);
             res.routes[0].legs = res.routes[0].legs.slice(0, i);

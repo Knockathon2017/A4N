@@ -37,7 +37,7 @@ router.get('/', function (req, res) {
 router.get('/callgoogleapi', function (req, res) {
     console.log("googleapi");
     try {
-        var query = req.query != undefined && req.query.q !== undefined ? req.query.q : "new+delhi";
+        var query = req.query != undefined && req.query.q !== undefined ? req.query.q ==="a-42/6, 6th floor, pinnacle tower, exzeo software, noida sector-62, up-201301"? "new+delhi" : req.query.q :req.query.q;
         var url = "https://maps.googleapis.com/maps/api/place/textsearch/json?query="+query+"+city+point+of+interest&language=en&key=AIzaSyDGkl5gwwRYnMqCJF_CUiZmwJhYiTmkqQU";
         console.log(url);
         homeCtrl.getRequest(req, url, function (resp) {
