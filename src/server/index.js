@@ -4,9 +4,6 @@ var path = require('path');
 var fs = require('fs');
 var homeCtrl = require("./homeController");
 var router = express.Router();
-var currentLocation = require('../assets/js/current_location_index.js');
-var where = require('node-where');
-var NodeGeocoder = require('node-geocoder');
 
 
 router.get('/', function (req, res) {
