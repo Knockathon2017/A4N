@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -100,7 +101,7 @@
                         <div id="directions_panel" style="margin:20px;background-color:#FFEE77;"></div>
                     </div>
                 </div>
-                <div class="col-sm-3 placelisting" onclick=tickfunc();>
+                <div class="col-sm-3 placelisting">
 
 
                 </div>
@@ -164,8 +165,9 @@
             };
             map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
             directionsDisplay.setMap(map);
-            
-            var url = $("#result").val() !== undefined && $("#result").val().length > 0 ? "/callgoogleapi?q="+$("#result").val()+"" : "/callgoogleapi";
+
+            var url = $("#result").val() !== undefined && $("#result").val().length > 0 ? "/callgoogleapi?q=" + $(
+                "#result").val() + "" : "/callgoogleapi";
             debugger;
             $.ajax({
                 type: "GET",
@@ -200,11 +202,16 @@
                     debugger;
                     //DestinationSourceAndTimerRoute(directionsService, directionsDisplay, addressArray, 6);
                     // calculateAndDisplayRoute(directionsService, directionsDisplay, addressArray);
-                    if(parseInt($("#timeinput").val()) !== undefined && parseInt($("#timeinput").val()) !== 0){
+                    if (parseInt($("#timeinput").val()) !== undefined && parseInt($("#timeinput").val()) !==
+                        0) {
                         debugger;
-                        SourceAndTimerRoute(directionsService, directionsDisplay, addressArray, $("#result").val(), parseInt($("#timeinput").val()));
-                    }else if($("#destinationinput").val() !== undefined && $("#destinationinput").val().length > 0)
-                        DestinationSourceAndTimerRoute(directionsService, directionsDisplay, addressArray,"Mehrauli, New Delhi, Delhi 110030, India", $("#result").val(), parseInt($("#timeinput").val()));
+                        SourceAndTimerRoute(directionsService, directionsDisplay, addressArray, $("#result")
+                            .val(), parseInt($("#timeinput").val()));
+                    } else if ($("#destinationinput").val() !== undefined && $("#destinationinput").val().length >
+                        0)
+                        DestinationSourceAndTimerRoute(directionsService, directionsDisplay, addressArray,
+                            "Mehrauli, New Delhi, Delhi 110030, India", $("#result").val(), parseInt($(
+                                "#timeinput").val()));
                     else
                         calculateAndDisplayRoute(directionsService, directionsDisplay, addressArray, origin);
                 }
@@ -256,7 +263,7 @@
             });
         }
         // call using timer
-        function SourceAndTimerRoute(directionsService, directionsDisplay, addressArray,source, timer) {
+        function SourceAndTimerRoute(directionsService, directionsDisplay, addressArray, source, timer) {
             debugger;
             var waypts = [];
             // var checkboxArray = document.getElementById('waypoints');
@@ -321,7 +328,7 @@
                     if (timer == 0 || timer === undefined)
                         directionsDisplay.setDirections(drawloc);
                     else {
-                         var timeinmin = timer * 60;
+                        var timeinmin = timer * 60;
                         //var timeinmin = 65;
                         var route1 = response.routes[0];
                         if (timeinmin > parseInt(route1.legs[0].duration.text)) {
@@ -343,8 +350,8 @@
                                 if (status === 'OK') {
                                     debugger;
                                     TimerSDCalc(response, timeinmin, source, dest);
-                                   // directionsDisplay.setDirections(drawloc);
-                                  //  var route = response.routes[0];
+                                    // directionsDisplay.setDirections(drawloc);
+                                    //  var route = response.routes[0];
                                 }
                                 // } else {
                                 //     window.alert('Directions request failed due to ' + status);
@@ -431,14 +438,14 @@
             var waypts = [];
             var timercall = res.routes[0].legs;
             var sum = 0;
-             newlocat.push(timercall[timercall.length - 1].end_address);
+            newlocat.push(timercall[timercall.length - 1].end_address);
             sum = sum + parseInt(timercall[timercall.length - 1].duration.text)
             for (i = 0; i <= timercall.length - 1; i++) {
                 if (sum >= timermin) {
                     break;
                 } else {
                     //var loc =timercall[i].end_address;
-                   newlocat.push(timercall[i].end_address);
+                    newlocat.push(timercall[i].end_address);
                     sum = sum + parseInt(timercall[i].duration.text);
                 }
             }
@@ -463,27 +470,28 @@
                         window.alert('Directions request failed due to ' + status);
                     }
                 });
-            }}
-
-            //TimerCalculator
-            function TimerCalcWithDestination(res, timerhour, detination) {
-                debugger;
-                var timercall = res.routes[0].legs;
-                var sum = 0;
-                for (i = 0; i < timercall.length; i++) {
-                    if (sum >= timerhour) {
-                        break;
-                    } else
-                        sum = sum + parseInt(timercall[i].duration.text)
-                }
-                res.geocoded_waypoints = res.geocoded_waypoints.slice(0, i);
-                res.routes[0].legs = res.routes[0].legs.slice(0, i);
-                res.routes[0].waypoint_order = res.routes[0].waypoint_order.slice(0, i);
-                debugger;
-                return res;
             }
+        }
 
-         //filter exclude
+        //TimerCalculator
+        function TimerCalcWithDestination(res, timerhour, detination) {
+            debugger;
+            var timercall = res.routes[0].legs;
+            var sum = 0;
+            for (i = 0; i < timercall.length; i++) {
+                if (sum >= timerhour) {
+                    break;
+                } else
+                    sum = sum + parseInt(timercall[i].duration.text)
+            }
+            res.geocoded_waypoints = res.geocoded_waypoints.slice(0, i);
+            res.routes[0].legs = res.routes[0].legs.slice(0, i);
+            res.routes[0].waypoint_order = res.routes[0].waypoint_order.slice(0, i);
+            debugger;
+            return res;
+        }
+
+        //filter exclude
         // function excludeFilter(directionsService, directionsDisplay, addressArray,excludearray) {
         //     var waypts = [];
         //     // var checkboxArray = document.getElementById('waypoints');
@@ -506,26 +514,42 @@
         //             window.alert('Directions request failed due to ' + status);
         //         }
         //     });
-            
+
         //     }
-       // }
+        // }
 
 
         function createDiv(data) {
             var $mainContainer = $(".placelisting");
             for (i = 0; i < data.length; i++) {
-                var newDiv = $('<div class="row"> <div class="col-sm-4" style="padding-right:0;"> <img src="' + data[i]
+                var divaddress = data[i].address;
+                var newDiv = $(
+                    '<div class="row _placelisting"> <div class="col-sm-4" style="padding-right:0;"> <img onclick=tickfunc(); src="' +
+                    data[i]
                     .icon +
                     '" class="img-responsive" alt=""> <div itemprop="name" class="star"> <div class="item__stars-badges"> <div class="item__stars-wrp"><span class="icon-ic item__star"><svg xmlns="http://www.w3.org/2000/svg" focusable="false" tabindex="-1" width="12" height="12" viewBox="0 0 12 12"><path class="svg-color--primary" fill="#F6AB3F" d="M11.988 5.21c-.052-.275-.27-.488-.545-.534l-3.604-.6L6.63.455C6.542.184 6.287 0 6 0s-.542.184-.632.456L4.16 4.076l-3.603.6c-.275.046-.493.26-.545.533-.052.273.072.55.312.695L3.2 7.63l-1.165 3.493c-.093.28.01.59.25.758.115.08.25.12.382.12.148 0 .295-.05.416-.146L6 9.52l2.917 2.333c.12.098.27.147.416.147.133 0 .267-.04.38-.12.244-.17.346-.478.252-.758L8.8 7.63l2.876-1.725c.24-.144.364-.422.312-.696z"></path></svg></span> <span class="icon-ic item__star"> <svg xmlns="http://www.w3.org/2000/svg" focusable="false" tabindex="-1" width="12" height="12" viewBox="0 0 12 12"> <path class="svg-color--primary" fill="#F6AB3F" d="M11.988 5.21c-.052-.275-.27-.488-.545-.534l-3.604-.6L6.63.455C6.542.184 6.287 0 6 0s-.542.184-.632.456L4.16 4.076l-3.603.6c-.275.046-.493.26-.545.533-.052.273.072.55.312.695L3.2 7.63l-1.165 3.493c-.093.28.01.59.25.758.115.08.25.12.382.12.148 0 .295-.05.416-.146L6 9.52l2.917 2.333c.12.098.27.147.416.147.133 0 .267-.04.38-.12.244-.17.346-.478.252-.758L8.8 7.63l2.876-1.725c.24-.144.364-.422.312-.696z"></path> </svg> </span><span class="icon-ic item__star"><svg xmlns="http://www.w3.org/2000/svg" focusable="false" tabindex="-1" width="12" height="12" viewBox="0 0 12 12"><path class="svg-color--primary" fill="#F6AB3F" d="M11.988 5.21c-.052-.275-.27-.488-.545-.534l-3.604-.6L6.63.455C6.542.184 6.287 0 6 0s-.542.184-.632.456L4.16 4.076l-3.603.6c-.275.046-.493.26-.545.533-.052.273.072.55.312.695L3.2 7.63l-1.165 3.493c-.093.28.01.59.25.758.115.08.25.12.382.12.148 0 .295-.05.416-.146L6 9.52l2.917 2.333c.12.098.27.147.416.147.133 0 .267-.04.38-.12.244-.17.346-.478.252-.758L8.8 7.63l2.876-1.725c.24-.144.364-.422.312-.696z"></path></svg></span> <span class="icon-ic item__star"> <svg xmlns="http://www.w3.org/2000/svg" focusable="false" tabindex="-1" width="12" height="12" viewBox="0 0 12 12"> <path class="svg-color--primary" fill="#F6AB3F" d="M11.988 5.21c-.052-.275-.27-.488-.545-.534l-3.604-.6L6.63.455C6.542.184 6.287 0 6 0s-.542.184-.632.456L4.16 4.076l-3.603.6c-.275.046-.493.26-.545.533-.052.273.072.55.312.695L3.2 7.63l-1.165 3.493c-.093.28.01.59.25.758.115.08.25.12.382.12.148 0 .295-.05.416-.146L6 9.52l2.917 2.333c.12.098.27.147.416.147.133 0 .267-.04.38-.12.244-.17.346-.478.252-.758L8.8 7.63l2.876-1.725c.24-.144.364-.422.312-.696z"></path> </svg> </span><span class="icon-ic item__star"><svg xmlns="http://www.w3.org/2000/svg" focusable="false" tabindex="-1" width="12" height="12" viewBox="0 0 12 12"><path class="svg-color--primary" fill="#F6AB3F" d="M11.988 5.21c-.052-.275-.27-.488-.545-.534l-3.604-.6L6.63.455C6.542.184 6.287 0 6 0s-.542.184-.632.456L4.16 4.076l-3.603.6c-.275.046-.493.26-.545.533-.052.273.072.55.312.695L3.2 7.63l-1.165 3.493c-.093.28.01.59.25.758.115.08.25.12.382.12.148 0 .295-.05.416-.146L6 9.52l2.917 2.333c.12.098.27.147.416.147.133 0 .267-.04.38-.12.244-.17.346-.478.252-.758L8.8 7.63l2.876-1.725c.24-.144.364-.422.312-.696z"></path></svg></span></div> </div> </div> </div> <div class="col-sm-8"> <div class="itemdetails"> <h3>' +
-                    data[i].name + '</h3> <p>' + data[i].address +
+                    data[i].name + '</h3> <p id=' + data[i].name.split(" ").join("_") + '>' + data[i].address +
                     '</p> <span class="visittime"><i class="glyphicon glyphicon-time" aria-hidden="true"></i> 2Hrs</span> <span class="visittime"><i class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></i> ' +
                     data[i].rating +
-                    '</span> <a class="exclude"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span> exclude</a> </div> </div> </div>'
+                    '</span> <a class="exclude ' + data[i].name.split(" ").join("_") +
+                    '"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span> exclude</a> </div> </div> </div>'
                 );
+                $('a.exclude').click(function () {
+                    var clickedItemAddress = $("#Jantar_Mantar").text();
+                    $(this).parents().closest("div.row._placelisting").animate({
+                        opacity: 'hide',
+                        left: '200px',
+                    }, 'slow', 'linear', function () {
+                        $(this).remove();
+                    });
+                })
                 $mainContainer.append(newDiv);
             }
         }
 
+        // function mynameisamit(data){
+        //     debugger;
+        // }
     </script>
 </body>
 
