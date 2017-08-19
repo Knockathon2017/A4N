@@ -1,3 +1,8 @@
+body{
+    font-family: 'Roboto', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+}
 .darkSection {
     width: 100%;
     padding: 42px 0;
@@ -102,4 +107,60 @@
     background-repeat: no-repeat;
     background-position: 0 -100px;
     background-size: cover;
+}
+.itemdetails{
+    position: relative;
+    padding: 0;
+}
+.itemdetails h3{
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+    color: #03A9F4;
+}
+.itemdetails p{
+    margin: 0;
+    padding: 5px 0;
+    font-size: 12px;
+    color: #666;
+    line-height: 14px;
+}
+.star{
+    position: absolute;
+    bottom: 0;
+    left: 15px;
+    z-index: 9;
+    padding: 3px 7px 2px;
+    background: rgba(0, 0, 0, 0.25)
+}
+.itemdetails .visittime{
+    font-family: 'Roboto', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    padding: 2px 5px;
+    background: #8BC34A;
+    color: rgb(255, 255, 255);
+    border-radius: 2px;
+}
+.itemdetails .exclude{
+    font-family: 'Roboto', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    padding: 2px 5px;
+    background: #9E9E9E;
+    color: rgb(255, 255, 255);
+    border-radius: 2px;
+}
+.placelisting{
+    overflow-y: auto;
+}
+.placelisting .row{
+    overflow-y: auto;
+    margin-bottom: 20px;
+    padding: 10px 0;
+    box-shadow: 0px 5px 20px 0px rgba(0, 0, 0, 0.1);
+}
+.placelisting .row:hover{
+    background: #ededed;
+    cursor: pointer;
 }
