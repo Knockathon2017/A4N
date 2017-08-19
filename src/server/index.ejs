@@ -89,10 +89,10 @@
         </div>
     </section>
 
-    <section class="front hide" id="introslide">
+    <section class="front " id="introslide">
     </section>
 
-    <section class="result">
+    <section class="result hide" id="dataslide">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-9 result">
@@ -384,24 +384,10 @@
         }
 
         function changelocation() {
-
+            $("#dataslide").removeClass("hide");
+            $("#introslide").addClass("hide");
             initialize($("#result").val());
         }
-        // function detectmylocation(){
-        //     $.ajax({
-        //         type: "GET",
-        //         url: "/myclocation",
-        //         error: function (jqXHR, textStatus, errorThrown) {
-        //             
-        //             console.log("error");
-        //             return false;
-        //         },
-        //         success: function (data) {
-        //             
-        //             // var jsonData = JSON.parse(data);
-        //         }
-        //     });
-        // }
 
         //TimerCalculator
         function TimerCalc(res, timerhour) {
@@ -419,15 +405,16 @@
             res.geocoded_waypoints = res.geocoded_waypoints.slice(0, i);
             res.routes[0].legs = res.routes[0].legs.slice(0, i);
             res.routes[0].waypoint_order = res.routes[0].waypoint_order.slice(0, i);
-            //  }
-            //return resp;
-            //  }
 
 
             res.request.destination.query = res.routes[0].legs[i - 1].end_address;
             return res;
         }
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> 6ab123faec4489ec0a116214c89fd8fbec557c0a
         //Timerwith source and destinationCalculator
         function TimerSDCalc(res, timermin, source, dest) {
             var newlocat = [];
@@ -517,13 +504,20 @@
 
         function createDiv(data) {
             var $mainContainer = $(".placelisting");
+            var arr = [];
+            
             for (i = 0; i < data.length; i++) {
+                var randomInteger = Math.floor(Math.random() * 5) + 1;
+                var starelement = "";
+                for (var index = 1; index <= randomInteger; index++) {
+                    arr.push('<span class="icon-ic item__star"><svg xmlns="http://www.w3.org/2000/svg" focusable="false" tabindex="-1" width="12" height="12" viewBox="0 0 12 12"><path class="svg-color--primary" fill="#F6AB3F" d="M11.988 5.21c-.052-.275-.27-.488-.545-.534l-3.604-.6L6.63.455C6.542.184 6.287 0 6 0s-.542.184-.632.456L4.16 4.076l-3.603.6c-.275.046-.493.26-.545.533-.052.273.072.55.312.695L3.2 7.63l-1.165 3.493c-.093.28.01.59.25.758.115.08.25.12.382.12.148 0 .295-.05.416-.146L6 9.52l2.917 2.333c.12.098.27.147.416.147.133 0 .267-.04.38-.12.244-.17.346-.478.252-.758L8.8 7.63l2.876-1.725c.24-.144.364-.422.312-.696z"></path></svg></span>');
+                }
+                starelement = arr.join("");
+                arr = [];
                 var divaddress = data[i].address;
                 var newDiv = $(
                     '<div class="row _placelisting"> <div class="col-sm-4" style="padding-right:0;"> <img onclick=tickfunc(); src="' +
-                    data[i]
-                    .icon +
-                    '" class="img-responsive" alt=""> <div itemprop="name" class="star"> <div class="item__stars-badges"> <div class="item__stars-wrp"><span class="icon-ic item__star"><svg xmlns="http://www.w3.org/2000/svg" focusable="false" tabindex="-1" width="12" height="12" viewBox="0 0 12 12"><path class="svg-color--primary" fill="#F6AB3F" d="M11.988 5.21c-.052-.275-.27-.488-.545-.534l-3.604-.6L6.63.455C6.542.184 6.287 0 6 0s-.542.184-.632.456L4.16 4.076l-3.603.6c-.275.046-.493.26-.545.533-.052.273.072.55.312.695L3.2 7.63l-1.165 3.493c-.093.28.01.59.25.758.115.08.25.12.382.12.148 0 .295-.05.416-.146L6 9.52l2.917 2.333c.12.098.27.147.416.147.133 0 .267-.04.38-.12.244-.17.346-.478.252-.758L8.8 7.63l2.876-1.725c.24-.144.364-.422.312-.696z"></path></svg></span> <span class="icon-ic item__star"> <svg xmlns="http://www.w3.org/2000/svg" focusable="false" tabindex="-1" width="12" height="12" viewBox="0 0 12 12"> <path class="svg-color--primary" fill="#F6AB3F" d="M11.988 5.21c-.052-.275-.27-.488-.545-.534l-3.604-.6L6.63.455C6.542.184 6.287 0 6 0s-.542.184-.632.456L4.16 4.076l-3.603.6c-.275.046-.493.26-.545.533-.052.273.072.55.312.695L3.2 7.63l-1.165 3.493c-.093.28.01.59.25.758.115.08.25.12.382.12.148 0 .295-.05.416-.146L6 9.52l2.917 2.333c.12.098.27.147.416.147.133 0 .267-.04.38-.12.244-.17.346-.478.252-.758L8.8 7.63l2.876-1.725c.24-.144.364-.422.312-.696z"></path> </svg> </span><span class="icon-ic item__star"><svg xmlns="http://www.w3.org/2000/svg" focusable="false" tabindex="-1" width="12" height="12" viewBox="0 0 12 12"><path class="svg-color--primary" fill="#F6AB3F" d="M11.988 5.21c-.052-.275-.27-.488-.545-.534l-3.604-.6L6.63.455C6.542.184 6.287 0 6 0s-.542.184-.632.456L4.16 4.076l-3.603.6c-.275.046-.493.26-.545.533-.052.273.072.55.312.695L3.2 7.63l-1.165 3.493c-.093.28.01.59.25.758.115.08.25.12.382.12.148 0 .295-.05.416-.146L6 9.52l2.917 2.333c.12.098.27.147.416.147.133 0 .267-.04.38-.12.244-.17.346-.478.252-.758L8.8 7.63l2.876-1.725c.24-.144.364-.422.312-.696z"></path></svg></span> <span class="icon-ic item__star"> <svg xmlns="http://www.w3.org/2000/svg" focusable="false" tabindex="-1" width="12" height="12" viewBox="0 0 12 12"> <path class="svg-color--primary" fill="#F6AB3F" d="M11.988 5.21c-.052-.275-.27-.488-.545-.534l-3.604-.6L6.63.455C6.542.184 6.287 0 6 0s-.542.184-.632.456L4.16 4.076l-3.603.6c-.275.046-.493.26-.545.533-.052.273.072.55.312.695L3.2 7.63l-1.165 3.493c-.093.28.01.59.25.758.115.08.25.12.382.12.148 0 .295-.05.416-.146L6 9.52l2.917 2.333c.12.098.27.147.416.147.133 0 .267-.04.38-.12.244-.17.346-.478.252-.758L8.8 7.63l2.876-1.725c.24-.144.364-.422.312-.696z"></path> </svg> </span><span class="icon-ic item__star"><svg xmlns="http://www.w3.org/2000/svg" focusable="false" tabindex="-1" width="12" height="12" viewBox="0 0 12 12"><path class="svg-color--primary" fill="#F6AB3F" d="M11.988 5.21c-.052-.275-.27-.488-.545-.534l-3.604-.6L6.63.455C6.542.184 6.287 0 6 0s-.542.184-.632.456L4.16 4.076l-3.603.6c-.275.046-.493.26-.545.533-.052.273.072.55.312.695L3.2 7.63l-1.165 3.493c-.093.28.01.59.25.758.115.08.25.12.382.12.148 0 .295-.05.416-.146L6 9.52l2.917 2.333c.12.098.27.147.416.147.133 0 .267-.04.38-.12.244-.17.346-.478.252-.758L8.8 7.63l2.876-1.725c.24-.144.364-.422.312-.696z"></path></svg></span></div> </div> </div> </div> <div class="col-sm-8"> <div class="itemdetails"> <h3>' +
+                    data[i].icon +'" class="img-responsive" alt=""> <div itemprop="name" class="star"> <div class="item__stars-badges"> <div class="item__stars-wrp">'+starelement+'</div> </div> </div> </div> <div class="col-sm-8"> <div class="itemdetails"> <h3>' +
                     data[i].name + '</h3> <p id=' + data[i].name.split(" ").join("_") + '>' + data[i].address +
                     '</p> <span class="visittime"><i class="glyphicon glyphicon-time" aria-hidden="true"></i> 2Hrs</span> <span class="visittime"><i class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></i> ' +
                     data[i].rating +
