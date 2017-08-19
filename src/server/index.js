@@ -46,9 +46,13 @@ router.get('/callgoogleapi', function (req, res) {
                     var element = jsonData.results[index];
                     var location = element.geometry.location;
                     var address = element.formatted_address;
+                    var name = element.name;
                     // addressArray.push(address);
                     var obj = {
-                        address: address
+                        address: address,
+                        name: name,
+                        rating:element.rating,
+                        icon: element.icon
                     };
                     addressArray.push(obj);
                     var place_name = element.name;
@@ -62,6 +66,7 @@ router.get('/callgoogleapi', function (req, res) {
         res.render("error");
     }
 });
+
 
 // router.get('/myclocation', function (req, res) {
 //     console.log("myclocation");

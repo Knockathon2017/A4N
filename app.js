@@ -33,11 +33,11 @@ app.use('/assets/css', express.static(path.join(__dirname, 'src', 'assets', 'css
 app.use('/assets/images', express.static(path.join(__dirname, 'src', 'assets', 'images')));
 app.use('/assets/fonts', express.static(path.join(__dirname, 'src', 'assets', 'fonts')));
 app.use('/assets/font', express.static(path.join(__dirname, 'src', 'assets', 'font')));
-app.use('/assets/app', express.static(path.join(__dirname, '..', 'Client')));
-app.use('/assets/controllers', express.static(path.join(__dirname, '..', 'Client', 'Controllers')));
+app.use('/assets/app', express.static(path.join(__dirname, 'src', 'client')));
+app.use('/assets/controllers', express.static(path.join(__dirname, 'src', 'client', 'js')));
 app.use('/assets/services', express.static(path.join(__dirname, '..', 'Client', 'Services')));
 app.use('/assets/shared', express.static(path.join(__dirname, '..', 'Client', 'Shared')));
-app.use('/assets/client', express.static(path.join(__dirname, '..', 'Client', 'Views')));
+app.use('/assets/client', express.static(path.join(__dirname, 'src', 'client', 'views')));
 
 //required to interpret all the values in body of request
 app.use(bodyParser.json());
