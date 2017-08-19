@@ -49,17 +49,17 @@
                         </div>
                         <div class="col-sm-4 col-xs-12">
                             <div class="searchTour">
-                                <input type="text" placeholder="New Delhi" class="form-control textbox">
+                                <input type="text" id="destinationinput" placeholder="New Delhi" class="form-control textbox">
                                 <span>To</span>
                             </div>
                         </div>
                         <div class="col-sm-1 col-xs-12">
                             <div class="searchTour">
-                                <input type="number" id="timeinput" value="2" placeholder="0" class="form-control textbox">
+                                <input type="number" id="timeinput" value="0" placeholder="0" class="form-control textbox">
                                 <span>Time(Hrs)</span>
                             </div>
                         </div>
-                        <div class="col-sm-1 col-xs-12">
+                        <!--<div class="col-sm-1 col-xs-12">
                             <div class="searchTour">
                                 <input type="number" placeholder="0" class="form-control textbox">
                                 <span>Adult</span>
@@ -76,7 +76,7 @@
                                 <input type="number" placeholder="0" class="form-control textbox">
                                 <span>Age<60</span>
                             </div>
-                        </div>
+                        </div>-->
 
 
                     </div>
@@ -100,7 +100,7 @@
                         <div id="directions_panel" style="margin:20px;background-color:#FFEE77;"></div>
                     </div>
                 </div>
-                <div class="col-sm-3 placelisting">
+                <div class="col-sm-3 placelisting" onclick=tickfunc();>
 
 
                 </div>
@@ -154,7 +154,7 @@
         var myHomeLocation = "a-42/6, 6th floor, pinnacle tower, exzeo software, noida sector-62, up-201301";
 
         function initialize(origin) {
-
+            debugger;
             directionsDisplay = new google.maps.DirectionsRenderer();
             var chicago = new google.maps.LatLng(28.626663, 77.209015);
             var myOptions = {
@@ -164,19 +164,18 @@
             };
             map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
             directionsDisplay.setMap(map);
-            // calcRoute();
-            // var url =
-            //     "https://maps.googleapis.com/maps/api/place/textsearch/json?query=new+delhi+city+point+of+interest&language=en&key=AIzaSyDVDNY_xUq0LKpNswJ_d4U5_r2u2hmd1m4";
-
+            
+            var url = $("#result").val() !== undefined && $("#result").val().length > 0 ? "/callgoogleapi?q="+$("#result").val()+"" : "/callgoogleapi";
+            debugger;
             $.ajax({
                 type: "GET",
-                url: "/callgoogleapi",
+                url: url,
                 error: function (jqXHR, textStatus, errorThrown) {
 
                     console.log("error");
                 },
                 success: function (data) {
-
+                    $(".placelisting").empty();
                     // var jsonData = JSON.parse(data);
                     var jsonData = data;
                     var addressArray = [];
@@ -192,14 +191,22 @@
                             addressArray.push(obj);
                             var place_name = element.name;
                         }
+                        debugger;
                         console.log("location");
                         console.log(addressArray);
+                        // myfunc(data);
+                        createDiv(data);
                     }
-
+                    debugger;
                     //DestinationSourceAndTimerRoute(directionsService, directionsDisplay, addressArray, 6);
                     // calculateAndDisplayRoute(directionsService, directionsDisplay, addressArray);
-
-                    calculateAndDisplayRoute(directionsService, directionsDisplay, addressArray, origin);
+                    if(parseInt($("#timeinput").val()) !== undefined && parseInt($("#timeinput").val()) !== 0){
+                        debugger;
+                        SourceAndTimerRoute(directionsService, directionsDisplay, addressArray, $("#result").val(), parseInt($("#timeinput").val()));
+                    }else if($("#destinationinput").val() !== undefined && $("#destinationinput").val().length > 0)
+                        DestinationSourceAndTimerRoute(directionsService, directionsDisplay, addressArray,"Mehrauli, New Delhi, Delhi 110030, India", $("#result").val(), parseInt($("#timeinput").val()));
+                    else
+                        calculateAndDisplayRoute(directionsService, directionsDisplay, addressArray, origin);
                 }
             });
         }
@@ -215,9 +222,9 @@
                     stopover: true
                 });
             }
-            var origin = origin === undefined || origin.length <= 0 ? myHomeLocation : origin;
+            var myorigin = origin === undefined || origin.length <= 0 ? myHomeLocation : origin;
             directionsService.route({
-                origin: origin,
+                origin: myorigin,
                 // destination: document.getElementById('end').value,
                 //  origin: checkboxArray[0].address,
                 destination: checkboxArray[checkboxArray.length - 1].address,
@@ -225,6 +232,7 @@
                 optimizeWaypoints: true,
                 travelMode: 'DRIVING'
             }, function (response, status) {
+                debugger;
                 if (status === 'OK') {
                     directionsDisplay.setDirections(response);
                     debugger;
@@ -243,12 +251,13 @@
                     //     summaryPanel.innerHTML += route.legs[i].duration.text + '<br><br>';
                     // }
                 } else {
-                    window.alert('Directions request failed due to ' + status);
+                    // window.alert('Directions request failed due to ' + status);
                 }
             });
         }
         // call using timer
-        function SourceAndTimerRoute(directionsService, directionsDisplay, addressArray) {
+        function SourceAndTimerRoute(directionsService, directionsDisplay, addressArray,source, timer) {
+            debugger;
             var waypts = [];
             // var checkboxArray = document.getElementById('waypoints');
             var checkboxArray = addressArray;
@@ -261,14 +270,14 @@
             directionsService.route({
                 // origin: document.getElementById('start').value,
                 // destination: document.getElementById('end').value,
-                origin: checkboxArray[0].address,
+                origin: source,
                 destination: checkboxArray[checkboxArray.length - 1].address,
                 waypoints: waypts,
                 optimizeWaypoints: true,
                 travelMode: 'DRIVING'
             }, function (response, status) {
                 if (status === 'OK') {
-                    var time = 300;
+                    var time = timer * 60;
                     var drawloc = TimerCalc(response, time);
                     //console.log(drawloc);
                     directionsDisplay.setDirections(drawloc);
@@ -292,23 +301,28 @@
             });
         }
 
+        // function tickfunc(){
+        //     debugger;
+        //     initialize("Mehrauli, New Delhi, Delhi 110030, India");
+        //     debugger;
+        //     }
         // call using timerwith destination
-        function DestinationSourceAndTimerRoute(directionsService, directionsDisplay, addressArray, timer) {
+        function DestinationSourceAndTimerRoute(directionsService, directionsDisplay, addressArray, dest, source, timer) {
             var waypts = [];
             var checkboxArray = addressArray;
             directionsService.route({
-                origin: "a-42/6, 6th floor, pinnacle tower, exzeo software, noida sector-62, up-201301",
-                destination: "Lotus Temple Rd, Bahapur, Shambhu Dayal Bagh, Kalkaji, New Delhi, Delhi 110019, India",
+                origin: source,
+                destination: dest,
                 waypoints: waypts,
                 optimizeWaypoints: true,
                 travelMode: 'DRIVING'
             }, function (response, status) {
                 if (status === 'OK') {
-                    if (timer == null)
+                    if (timer == 0 || timer === undefined)
                         directionsDisplay.setDirections(drawloc);
                     else {
-                        //  var timeinmin = timer * 60;
-                        var timeinmin = 65;
+                         var timeinmin = timer * 60;
+                        //var timeinmin = 65;
                         var route1 = response.routes[0];
                         if (timeinmin > parseInt(route1.legs[0].duration.text)) {
                             for (var i = 0; i < checkboxArray.length; i++) {
@@ -317,18 +331,18 @@
                                     stopover: true
                                 });
                             }
-                            var destin =
-                                "Mehrauli-Badarpur Road, Village : Said-ul-Ajaib, Near Saket Metro Station, New Delhi, Delhi 110030, India";
+                            // var destin =
+                            //     "Mehrauli-Badarpur Road, Village : Said-ul-Ajaib, Near Saket Metro Station, New Delhi, Delhi 110030, India";
                             directionsService.route({
-                                origin: "a-42/6, 6th floor, pinnacle tower, exzeo software, noida sector-62, up-201301",
-                                destination: "Lotus Temple Rd, Bahapur, Shambhu Dayal Bagh, Kalkaji, New Delhi, Delhi 110019, India",
+                                origin: source,
+                                destination: dest,
                                 waypoints: waypts,
                                 optimizeWaypoints: true,
                                 travelMode: 'DRIVING'
                             }, function (response, status) {
                                 if (status === 'OK') {
                                     debugger;
-                                    TimerSDCalc(response, timeinmin);
+                                    TimerSDCalc(response, timeinmin, source, dest);
                                    // directionsDisplay.setDirections(drawloc);
                                   //  var route = response.routes[0];
                                 }
@@ -395,24 +409,24 @@
             res.request.destination.query = res.routes[0].legs[i - 1].end_address;
             return res;
         }
-        $.ajax({
-            type: "GET",
-            url: "/callgoogleapi",
-            error: function (jqXHR, textStatus, errorThrown) {
-                debugger;
-                console.log("error");
-            },
-            success: function (data) {
-                debugger;
-                createDiv(data);
-                // var jsonData = JSON.parse(data);
+        // $.ajax({
+        //     type: "GET",
+        //     url: "/callgoogleapi",
+        //     error: function (jqXHR, textStatus, errorThrown) {
+        //         debugger;
+        //         console.log("error");
+        //     },
+        //     success: function (data) {
+        //         debugger;
+        //         createDiv(data);
+        //         // var jsonData = JSON.parse(data);
 
-            }
-        });
+        //     }
+        // });
 
 
         //Timerwith source and destinationCalculator
-        function TimerSDCalc(res, timermin) {
+        function TimerSDCalc(res, timermin, source, dest) {
             var newlocat = [];
             var waypts = [];
             var timercall = res.routes[0].legs;
@@ -434,8 +448,8 @@
                     stopover: true
                 });
                 directionsService.route({
-                    origin: "a-42/6, 6th floor, pinnacle tower, exzeo software, noida sector-62, up-201301",
-                    destination: "Lotus Temple Rd, Bahapur, Shambhu Dayal Bagh, Kalkaji, New Delhi, Delhi 110019, India",
+                    origin: source,
+                    destination: dest,
                     waypoints: waypts,
                     optimizeWaypoints: true,
                     travelMode: 'DRIVING'
@@ -500,7 +514,7 @@
         function createDiv(data) {
             var $mainContainer = $(".placelisting");
             for (i = 0; i < data.length; i++) {
-                var newDiv = $('<div class="row"> <div class="col-sm-4" style="padding-right:0;"> <img src="' + data[0]
+                var newDiv = $('<div class="row"> <div class="col-sm-4" style="padding-right:0;"> <img src="' + data[i]
                     .icon +
                     '" class="img-responsive" alt=""> <div itemprop="name" class="star"> <div class="item__stars-badges"> <div class="item__stars-wrp"><span class="icon-ic item__star"><svg xmlns="http://www.w3.org/2000/svg" focusable="false" tabindex="-1" width="12" height="12" viewBox="0 0 12 12"><path class="svg-color--primary" fill="#F6AB3F" d="M11.988 5.21c-.052-.275-.27-.488-.545-.534l-3.604-.6L6.63.455C6.542.184 6.287 0 6 0s-.542.184-.632.456L4.16 4.076l-3.603.6c-.275.046-.493.26-.545.533-.052.273.072.55.312.695L3.2 7.63l-1.165 3.493c-.093.28.01.59.25.758.115.08.25.12.382.12.148 0 .295-.05.416-.146L6 9.52l2.917 2.333c.12.098.27.147.416.147.133 0 .267-.04.38-.12.244-.17.346-.478.252-.758L8.8 7.63l2.876-1.725c.24-.144.364-.422.312-.696z"></path></svg></span> <span class="icon-ic item__star"> <svg xmlns="http://www.w3.org/2000/svg" focusable="false" tabindex="-1" width="12" height="12" viewBox="0 0 12 12"> <path class="svg-color--primary" fill="#F6AB3F" d="M11.988 5.21c-.052-.275-.27-.488-.545-.534l-3.604-.6L6.63.455C6.542.184 6.287 0 6 0s-.542.184-.632.456L4.16 4.076l-3.603.6c-.275.046-.493.26-.545.533-.052.273.072.55.312.695L3.2 7.63l-1.165 3.493c-.093.28.01.59.25.758.115.08.25.12.382.12.148 0 .295-.05.416-.146L6 9.52l2.917 2.333c.12.098.27.147.416.147.133 0 .267-.04.38-.12.244-.17.346-.478.252-.758L8.8 7.63l2.876-1.725c.24-.144.364-.422.312-.696z"></path> </svg> </span><span class="icon-ic item__star"><svg xmlns="http://www.w3.org/2000/svg" focusable="false" tabindex="-1" width="12" height="12" viewBox="0 0 12 12"><path class="svg-color--primary" fill="#F6AB3F" d="M11.988 5.21c-.052-.275-.27-.488-.545-.534l-3.604-.6L6.63.455C6.542.184 6.287 0 6 0s-.542.184-.632.456L4.16 4.076l-3.603.6c-.275.046-.493.26-.545.533-.052.273.072.55.312.695L3.2 7.63l-1.165 3.493c-.093.28.01.59.25.758.115.08.25.12.382.12.148 0 .295-.05.416-.146L6 9.52l2.917 2.333c.12.098.27.147.416.147.133 0 .267-.04.38-.12.244-.17.346-.478.252-.758L8.8 7.63l2.876-1.725c.24-.144.364-.422.312-.696z"></path></svg></span> <span class="icon-ic item__star"> <svg xmlns="http://www.w3.org/2000/svg" focusable="false" tabindex="-1" width="12" height="12" viewBox="0 0 12 12"> <path class="svg-color--primary" fill="#F6AB3F" d="M11.988 5.21c-.052-.275-.27-.488-.545-.534l-3.604-.6L6.63.455C6.542.184 6.287 0 6 0s-.542.184-.632.456L4.16 4.076l-3.603.6c-.275.046-.493.26-.545.533-.052.273.072.55.312.695L3.2 7.63l-1.165 3.493c-.093.28.01.59.25.758.115.08.25.12.382.12.148 0 .295-.05.416-.146L6 9.52l2.917 2.333c.12.098.27.147.416.147.133 0 .267-.04.38-.12.244-.17.346-.478.252-.758L8.8 7.63l2.876-1.725c.24-.144.364-.422.312-.696z"></path> </svg> </span><span class="icon-ic item__star"><svg xmlns="http://www.w3.org/2000/svg" focusable="false" tabindex="-1" width="12" height="12" viewBox="0 0 12 12"><path class="svg-color--primary" fill="#F6AB3F" d="M11.988 5.21c-.052-.275-.27-.488-.545-.534l-3.604-.6L6.63.455C6.542.184 6.287 0 6 0s-.542.184-.632.456L4.16 4.076l-3.603.6c-.275.046-.493.26-.545.533-.052.273.072.55.312.695L3.2 7.63l-1.165 3.493c-.093.28.01.59.25.758.115.08.25.12.382.12.148 0 .295-.05.416-.146L6 9.52l2.917 2.333c.12.098.27.147.416.147.133 0 .267-.04.38-.12.244-.17.346-.478.252-.758L8.8 7.63l2.876-1.725c.24-.144.364-.422.312-.696z"></path></svg></span></div> </div> </div> </div> <div class="col-sm-8"> <div class="itemdetails"> <h3>' +
                     data[i].name + '</h3> <p>' + data[i].address +
