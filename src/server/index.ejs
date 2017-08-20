@@ -22,7 +22,7 @@
     <![endif]-->
 </head>
 
-<body onload="initialize()">
+<body>
     <div class="container-fluid header">
         <div class="row">
             <div class="col-sm-3">
@@ -153,6 +153,17 @@
         var directionsService = new google.maps.DirectionsService();
         var map;
         var myHomeLocation = "a-42/6, 6th floor, pinnacle tower, exzeo software, noida sector-62, up-201301";
+        //   var map = null;
+        var startLocation = null;
+        var endLocation = null;
+        //  var directionsService = null;
+        var waypts = null;
+        var polyline = new google.maps.Polyline({
+            path: [],
+            strokeColor: '#FF0000',
+            strokeWeight: 3
+        });
+
 
         function initialize(origin) {
             debugger;
@@ -164,11 +175,13 @@
                 center: india
             };
             map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+            google.maps.event.addListener(map, 'click', function () {
+                infowindow.close();
+            });
             directionsDisplay.setMap(map);
 
             var url = $("#result").val() !== undefined && $("#result").val().length > 0 ? "/callgoogleapi?q=" + $(
                 "#result").val() + "" : "/callgoogleapi";
-            debugger;
             $.ajax({
                 type: "GET",
                 url: url,
@@ -199,8 +212,6 @@
                             addwithName.push(obj1);
                             //   var place_name = element.name;
                         }
-                        debugger;
-                        console.log("location");
                         console.log(addressArray);
                         // myfunc(data);
                         createDiv(data);
@@ -208,42 +219,43 @@
                     // if (("#result").val(). === undefined || $("#result").val().length <= 0) {
                     //     window.alert("please select Currentlocation/City is mandatory!");
                     // } else {
-                        if ($("#destinationinput").val() !== undefined && $("#destinationinput").val().length >
-                            0) {
-                            var dest = "";
-                            for (i = 0; i < addwithName.length; i++) {
-                                debugger;
-                                if (addwithName[i].name.toLowerCase() == $("#destinationinput").val().toLowerCase()) {
-                                    var dest = addwithName[i].address;
-                                    DestinationSourceAndTimerRoute(directionsService, directionsDisplay,
-                                        addressArray,
-                                        dest,origin, parseInt($(
-                                            "#timeinput").val()));
-                                    break;
-                                }
+                    if ($("#destinationinput").val() !== undefined && $("#destinationinput").val().length >
+                        0) {
+                        var dest = "";
+                        for (i = 0; i < addwithName.length; i++) {
+                            addwithName[i].name.trim();
+                            $("#destinationinput").val().trim();
+                            if (addwithName[i].name.toLowerCase() == $("#destinationinput").val().toLowerCase()) {
+                                var dest = addwithName[i].address;
+                                DestinationSourceAndTimerRoute(directionsService, directionsDisplay,
+                                    addwithName,
+                                    dest, origin, parseInt($(
+                                        "#timeinput").val()));
+                                break;
                             }
-                            if (dest == "") {
-                               window.alert("Please select a correct destination!");
-                            }
-                        } else if (parseInt($("#timeinput").val()) !== undefined && parseInt($("#timeinput")
-                                .val()) !==
-                            0) {
-                            SourceAndTimerRoute(directionsService, directionsDisplay, addressArray,
-                                origin, parseInt($("#timeinput").val()));
-                        } else {
-                            calculateAndDisplayRoute(directionsService, directionsDisplay, addressArray,
-                                origin);
                         }
-                   // }
+                        if (dest == "") {
+                            window.alert("Please select a correct destination!");
+                        }
+                    } else if (parseInt($("#timeinput").val()) !== undefined && parseInt($("#timeinput")
+                            .val()) !==
+                        0) {
+                        SourceAndTimerRoute(directionsService, directionsDisplay, addwithName,
+                            origin, parseInt($("#timeinput").val()));
+                    } else {
+                        calculateAndDisplayRoute(directionsService, directionsDisplay, addwithName,
+                            origin);
+                    }
+                    // }
                 }
             });
         }
 
         //initail call on load
-        function calculateAndDisplayRoute(directionsService, directionsDisplay, addressArray, origin) {
+        function calculateAndDisplayRoute(directionsService, directionsDisplay, addwithName, origin) {
             var waypts = [];
             // var checkboxArray = document.getElementById('waypoints');
-            var checkboxArray = addressArray;
+            var checkboxArray = addwithName;
             for (var i = 0; i < checkboxArray.length; i++) {
                 waypts.push({
                     location: checkboxArray[i].address,
@@ -260,35 +272,62 @@
                 optimizeWaypoints: true,
                 travelMode: 'DRIVING'
             }, function (response, status) {
-                debugger;
                 if (status === 'OK') {
-                    directionsDisplay.setDirections(response);
-                    debugger;
+                    //  markerset(response,addwithName);
+                    waypts = [];
+                    var bounds = new google.maps.LatLngBounds();
                     var route = response.routes[0];
-                    // var summaryPanel = document.getElementById('directions_panel');
-                    // summaryPanel.innerHTML = '';
-                    // // For each route, display summary information.
-                    // for (var i = 0; i < route.legs.length; i++) {
+                    startLocation = new Object();
+                    endLocation = new Object();
 
-                    //     var routeSegment = i + 1;
-                    //     summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment +
-                    //         '</b><br>';
-                    //     summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
-                    //     summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
-                    //     summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
-                    //     summaryPanel.innerHTML += route.legs[i].duration.text + '<br><br>';
-                    // }
-                } else {
-                    // window.alert('Directions request failed due to ' + status);
+                    var path = response.routes[0].overview_path;
+                    var legs = response.routes[0].legs;
+                    // var route = response.routes[0];
+
+                    for (i = 0; i < legs.length; i++) {
+                        if (i == 0) {
+                            startLocation.latlng = legs[i].start_location;
+                            startLocation.address = legs[i].start_address;
+                            startLocation.duration = legs[i].duration.text;
+                            startLocation.distance = legs[i].distance.text;
+                            startLocation.marker = createMarker(legs[i].start_location, addwithName, legs[i].start_address,
+                                "green", startLocation.duration, startLocation.distance);
+                        } else {
+                            waypts[i] = new Object();
+                            waypts[i].latlng = legs[i].start_location;
+                            waypts[i].address = legs[i].start_address;
+                            waypts[i].duration = legs[i].duration.text;
+                            waypts[i].distance = legs[i].distance.text;
+                            waypts[i].marker = createMarker(legs[i].start_location, addwithName, legs[i].start_address,
+                                "yellow", waypts[i].duration, waypts[i].distance);
+                        }
+                        endLocation.latlng = legs[i].end_location;
+                        endLocation.address = legs[i].end_address;
+                        endLocation.duration = legs[i].duration.text;
+                        endLocation.distance = legs[i].distance.text;
+                        var steps = legs[i].steps;
+                        // alert("processing "+steps.length+" steps");
+                        for (j = 0; j < steps.length; j++) {
+                            var nextSegment = steps[j].path;
+                            for (k = 0; k < nextSegment.length; k++) {
+                                polyline.getPath().push(nextSegment[k]);
+                                bounds.extend(nextSegment[k]);
+                            }
+                        }
+                    }
+
+                    polyline.setMap(map);
+                    map.fitBounds(bounds);
+                    endLocation.marker = createMarker(endLocation.latlng, addwithName, endLocation.address,
+                        "red", endLocation.duration, endLocation.distance);
                 }
             });
         }
         // call using timer
-        function SourceAndTimerRoute(directionsService, directionsDisplay, addressArray, source, timer) {
-            debugger;
+        function SourceAndTimerRoute(directionsService, directionsDisplay, addwithName, source, timer) {
             var waypts = [];
             // var checkboxArray = document.getElementById('waypoints');
-            var checkboxArray = addressArray;
+            var checkboxArray = addwithName;
             for (var i = 0; i < checkboxArray.length; i++) {
                 waypts.push({
                     location: checkboxArray[i].address,
@@ -308,29 +347,61 @@
                     var time = timer * 60;
                     var drawloc = TimerCalc(response, time);
                     //console.log(drawloc);
-                    directionsDisplay.setDirections(drawloc);
+                    //   directionsDisplay.setDirections(drawloc);
+                    waypts = [];
+                    var bounds = new google.maps.LatLngBounds();
                     var route = response.routes[0];
-                    // var summaryPanel = document.getElementById('directions_panel');
-                    // summaryPanel.innerHTML = '';
-                    // // For each route, display summary information.
-                    // for (var i = 0; i < route.legs.length; i++) {
+                    startLocation = new Object();
+                    endLocation = new Object();
 
-                    //     var routeSegment = i + 1;
-                    //     summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment +
-                    //         '</b><br>';
-                    //     summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
-                    //     summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
-                    //     summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
-                    //     summaryPanel.innerHTML += route.legs[i].duration.text + '<br><br>';
-                    // }
+                    var path = response.routes[0].overview_path;
+                    var legs = response.routes[0].legs;
+                    // var route = response.routes[0];
+
+                    for (i = 0; i < legs.length; i++) {
+                        if (i == 0) {
+                            startLocation.latlng = legs[i].start_location;
+                            startLocation.address = legs[i].start_address;
+                            startLocation.duration = legs[i].duration.text;
+                            startLocation.distance = legs[i].distance.text;
+                            startLocation.marker = createMarker(legs[i].start_location, addwithName, legs[i].start_address,
+                                "green", startLocation.duration, startLocation.distance);
+                        } else {
+                            waypts[i] = new Object();
+                            waypts[i].latlng = legs[i].start_location;
+                            waypts[i].address = legs[i].start_address;
+                            waypts[i].duration = legs[i].duration.text;
+                            waypts[i].distance = legs[i].distance.text;
+                            waypts[i].marker = createMarker(legs[i].start_location, addwithName, legs[i].start_address,
+                                "yellow", waypts[i].duration, waypts[i].distance);
+                        }
+                        endLocation.latlng = legs[i].end_location;
+                        endLocation.address = legs[i].end_address;
+                        endLocation.duration = legs[i].duration.text;
+                        endLocation.distance = legs[i].distance.text;
+                        var steps = legs[i].steps;
+                        // alert("processing "+steps.length+" steps");
+                        for (j = 0; j < steps.length; j++) {
+                            var nextSegment = steps[j].path;
+                            for (k = 0; k < nextSegment.length; k++) {
+                                polyline.getPath().push(nextSegment[k]);
+                                bounds.extend(nextSegment[k]);
+                            }
+                        }
+                    }
+
+                    polyline.setMap(map);
+                    map.fitBounds(bounds);
+                    endLocation.marker = createMarker(endLocation.latlng, addwithName, endLocation.address,
+                        "red", endLocation.duration, endLocation.distance);
                 }
             });
         }
 
         // call using timerwith destination
-        function DestinationSourceAndTimerRoute(directionsService, directionsDisplay, addressArray, dest, source, timer) {
+        function DestinationSourceAndTimerRoute(directionsService, directionsDisplay, addwithName, dest, source, timer) {
             var waypts = [];
-            var checkboxArray = addressArray;
+            var checkboxArray = addwithName;
             directionsService.route({
                 origin: source,
                 destination: dest,
@@ -339,8 +410,58 @@
                 travelMode: 'DRIVING'
             }, function (response, status) {
                 if (status === 'OK') {
-                    if (timer == 0 || timer === undefined)
-                        directionsDisplay.setDirections(response);
+                    if (timer == 0 || timer === undefined) 
+                    // {
+                    //     waypts = [];
+                    //     var bounds = new google.maps.LatLngBounds();
+                    //     var route = response.routes[0];
+                    //     startLocation = new Object();
+                    //     endLocation = new Object();
+
+                    //     var path = response.routes[0].overview_path;
+                    //     var legs = response.routes[0].legs;
+                    //     // var route = response.routes[0];
+
+                    //     for (i = 0; i < legs.length; i++) {
+                    //         if (i == 0) {
+                    //             startLocation.latlng = legs[i].start_location;
+                    //             startLocation.address = legs[i].start_address;
+                    //             startLocation.duration = legs[i].duration.text;
+                    //             startLocation.distance = legs[i].distance.text;
+                    //             startLocation.marker = createMarker(legs[i].start_location, addwithName, legs[i]
+                    //                 .start_address,
+                    //                 "green", startLocation.duration, startLocation.distance);
+                    //         }
+                    //         // } else {
+                    //         //     waypts[i] = new Object();
+                    //         //     waypts[i].latlng = legs[i].start_location;
+                    //         //     waypts[i].address = legs[i].start_address;
+                    //         //     waypts[i].duration = legs[i].duration.text;
+                    //         //     waypts[i].distance = legs[i].distance.text;
+                    //         //     waypts[i].marker = createMarker(legs[i].start_location, addwithName, legs[i].start_address,
+                    //         //         "yellow", waypts[i].duration, waypts[i].distance);
+                    //         // }
+                    //         endLocation.latlng = legs[i].end_location;
+                    //         endLocation.address = legs[i].end_address;
+                    //         endLocation.duration = legs[i].duration.text;
+                    //         endLocation.distance = legs[i].distance.text;
+                    //         var steps = legs[i].steps;
+                    //         // alert("processing "+steps.length+" steps");
+                    //         for (j = 0; j < steps.length; j++) {
+                    //             var nextSegment = steps[j].path;
+                    //             for (k = 0; k < nextSegment.length; k++) {
+                    //                 polyline.getPath().push(nextSegment[k]);
+                    //                 bounds.extend(nextSegment[k]);
+                    //             }
+                    //         }
+                    //     }
+
+                    //     polyline.setMap(map);
+                    //     map.fitBounds(bounds);
+                    //     endLocation.marker = createMarker(endLocation.latlng, addwithName, endLocation.address,
+                    //         "red", endLocation.duration, endLocation.distance);
+                    // }
+                    directionsDisplay.setDirections(response);
                     else {
                         var timeinmin = timer * 60;
                         //var timeinmin = 65;
@@ -363,9 +484,7 @@
                             }, function (response, status) {
                                 if (status === 'OK') {
                                     debugger;
-                                    TimerSDCalc(response, timeinmin, source, dest);
-                                    // directionsDisplay.setDirections(drawloc);
-                                    //  var route = response.routes[0];
+                                    TimerSDCalc(response, timeinmin, source, dest, addwithName);
                                 }
                                 // } else {
                                 //     window.alert('Directions request failed due to ' + status);
@@ -393,7 +512,7 @@
                 $("#introslide").addClass("hide");
                 initialize($("#result").val());
             } else {
-               window.alert("Please select Current Location/ City is mandatory!");
+                window.alert("Please select Current Location/ City is mandatory!");
             }
         }
 
@@ -419,7 +538,7 @@
             return res;
         }
         //Timerwith source and destinationCalculator
-        function TimerSDCalc(res, timermin, source, dest) {
+        function TimerSDCalc(res, timermin, source, dest, addwithName) {
             var newlocat = [];
             var waypts = [];
             var timercall = res.routes[0].legs;
@@ -448,10 +567,55 @@
                     travelMode: 'DRIVING'
                 }, function (response, status) {
                     if (status === 'OK') {
-                        // debugger;
-                        // var drawloc = TimerSDCalc(response, timeinmin);
-                        directionsDisplay.setDirections(response);
+                        waypts = [];
+                        var bounds = new google.maps.LatLngBounds();
                         var route = response.routes[0];
+                        startLocation = new Object();
+                        endLocation = new Object();
+
+                        var path = response.routes[0].overview_path;
+                        var legs = response.routes[0].legs;
+                        // var route = response.routes[0];
+
+                        for (i = 0; i < legs.length; i++) {
+                            if (i == 0) {
+                                startLocation.latlng = legs[i].start_location;
+                                startLocation.address = legs[i].start_address;
+                                startLocation.duration = legs[i].duration.text;
+                                startLocation.distance = legs[i].distance.text;
+                                startLocation.marker = createMarker(legs[i].start_location, addwithName, legs[i]
+                                    .start_address,
+                                    "green", startLocation.duration, startLocation.distance);
+                            } else {
+                                waypts[i] = new Object();
+                                waypts[i].latlng = legs[i].start_location;
+                                waypts[i].address = legs[i].start_address;
+                                waypts[i].duration = legs[i].duration.text;
+                                waypts[i].distance = legs[i].distance.text;
+                                waypts[i].marker = createMarker(legs[i].start_location, addwithName, legs[i].start_address,
+                                    "yellow", waypts[i].duration, waypts[i].distance);
+                            }
+                            endLocation.latlng = legs[i].end_location;
+                            endLocation.address = legs[i].end_address;
+                            endLocation.duration = legs[i].duration.text;
+                            endLocation.distance = legs[i].distance.text;
+                            var steps = legs[i].steps;
+                            // alert("processing "+steps.length+" steps");
+                            for (j = 0; j < steps.length; j++) {
+                                var nextSegment = steps[j].path;
+                                for (k = 0; k < nextSegment.length; k++) {
+                                    polyline.getPath().push(nextSegment[k]);
+                                    bounds.extend(nextSegment[k]);
+                                }
+                            }
+                        }
+
+                        polyline.setMap(map);
+                        map.fitBounds(bounds);
+                        endLocation.marker = createMarker(endLocation.latlng, addwithName, endLocation.address,
+                            "red", endLocation.duration, endLocation.distance);
+                        // directionsDisplay.setDirections(response);
+                        // var route = response.routes[0];
                     } else {
                         window.alert('Directions request failed due to ' + status);
                     }
@@ -468,7 +632,7 @@
                 if (sum >= timerhour) {
                     break;
                 } else
-                    sum = sum + parseInt(timercall[i].duration.text)+60
+                    sum = sum + parseInt(timercall[i].duration.text) + 60
             }
             res.geocoded_waypoints = res.geocoded_waypoints.slice(0, i);
             res.routes[0].legs = res.routes[0].legs.slice(0, i);
@@ -545,9 +709,93 @@
             }
         }
 
-        // function mynameisamit(data){
-        //     debugger;
-        // }
+        var infowindow = new google.maps.InfoWindow({
+            size: new google.maps.Size(150, 50)
+        });
+
+        var icons = new Array();
+        icons["red"] = new google.maps.MarkerImage("http://www.geocodezip.com/mapIcons/marker_red.png",
+            // This marker is 20 pixels wide by 34 pixels tall.
+            new google.maps.Size(20, 34),
+            // The origin for this image is 0,0.
+            new google.maps.Point(0, 0),
+            // The anchor for this image is at 9,34.
+            new google.maps.Point(9, 34));
+
+        function getMarkerImage(iconColor) {
+            if ((typeof (iconColor) == "undefined") || (iconColor == null)) {
+                iconColor = "red";
+            }
+            if (!icons[iconColor]) {
+                icons[iconColor] = new google.maps.MarkerImage("http://www.geocodezip.com/mapIcons/marker_" + iconColor +
+                    ".png",
+                    // This marker is 20 pixels wide by 34 pixels tall.
+                    new google.maps.Size(20, 34),
+                    // The origin for this image is 0,0.
+                    new google.maps.Point(0, 0),
+                    // The anchor for this image is at 6,20.
+                    new google.maps.Point(9, 34));
+            }
+            return icons[iconColor];
+
+        }
+
+        var iconImage = new google.maps.MarkerImage('mapIcons/marker_red.png',
+            // This marker is 20 pixels wide by 34 pixels tall.
+            new google.maps.Size(20, 34),
+            // The origin for this image is 0,0.
+            new google.maps.Point(0, 0),
+            // The anchor for this image is at 9,34.
+            new google.maps.Point(9, 34));
+        var iconShadow = new google.maps.MarkerImage('http://www.google.com/mapfiles/shadow50.png',
+            // The shadow image is larger in the horizontal dimension
+            // while the position and offset are the same as for the main image.
+            new google.maps.Size(37, 34),
+            new google.maps.Point(0, 0),
+            new google.maps.Point(9, 34));
+        var iconShape = {
+            coord: [9, 0, 6, 1, 4, 2, 2, 4, 0, 8, 0, 12, 1, 14, 2, 16, 5, 19, 7, 23, 8, 26, 9, 30, 9, 34, 11, 34,
+                11, 30, 12, 26, 13, 24, 14, 21, 16, 18, 18, 16, 20, 12, 20, 8, 18, 4, 16, 2, 15, 1, 13, 0
+            ],
+            type: 'poly'
+        };
+
+        function createMarker(latlng, label, html, color, time, distance) {
+            var lab = html === "Block A 42/6, A 42, Block A, Sector 62, Noida, Uttar Pradesh 201309, India" ?
+                "Exzeo Software Pvt. Ltd" : "Tourist Place";
+            for (i = 0; i < label.length; i++) {
+                var n = html.indexOf(",", 0);
+                var res = html.substring(0, n);
+                var n1 = label[i].address.indexOf(",", 0);
+                var res1 = label[i].address.substring(0, n1);
+                if (res1 === "New Delhi")
+                    res1 = "Delhi";
+                if (res1 == "Mathura Rd")
+                    res1 = "Mathura Road";
+                if (res1.toLowerCase() === res.toLowerCase()) {
+                    lab = label[i].name;
+                }
+            }
+            var contentString = '<b>' + lab + '</b><br>' + html + '<br>' + "Travelling Time: " + time + '<br>' +
+                "Distance: " + distance;
+            var marker = new google.maps.Marker({
+                position: latlng,
+                draggable: false,
+                map: map,
+                shadow: iconShadow,
+                icon: getMarkerImage(color),
+                shape: iconShape,
+                title: lab,
+                zIndex: Math.round(latlng.lat() * -100000) << 5
+            });
+
+            google.maps.event.addListener(marker, 'click', function () {
+                debugger;
+                infowindow.setContent(contentString);
+                infowindow.open(map, marker);
+            });
+            return marker;
+        }
     </script>
 </body>
 
